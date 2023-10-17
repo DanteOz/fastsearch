@@ -1,0 +1,99 @@
+#resultsPanel {
+  width: var(--contentWidth);
+  transition: margin 0.5s ease;
+}
+
+#results {
+  width: var(--contentWidth);
+  border: none;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 50px;
+}
+
+#results li {
+  display: flex;
+  padding: 10px 10px 10px 15px;
+  border-bottom: 1px solid var(--resultsBorder);
+  line-height: 1.3em;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  background-color: var(--bkgResult);
+}
+
+li:first-child {
+  border-top: 1px solid var(--resultsBorder);
+}
+
+.meta {
+  flex-grow: 1;
+  max-width: 510px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-right: 10px;
+}
+
+li img {
+  min-width: 168px;
+  height: 94px;
+  border-radius: 6px;
+  filter: saturate(10%) brightness(60%);
+  transition: all 0.4s;
+}
+
+li .vid {
+  margin-bottom: 10px;
+  color: var(--typeVid);
+}
+
+li .seg {
+  color: var(--typeSeg);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+li .seg span {
+  margin-right: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+li .seg div {
+  flex-grow: 1;
+}
+
+li .seg::before {
+  content: "";
+  min-width: 28px;
+  height: 28px;
+  background: url("/img/vid-go.svg") no-repeat center center;
+  margin-right: 15px;
+  transition: all 0.4s ease;
+}
+
+li:hover .seg span,
+li.selected .seg span {
+  color: var(--accent);
+  transition: all 0.4s ease;
+}
+
+li:hover .seg::before,
+li.selected .seg::before {
+  background: url("/img/vid-on.svg") no-repeat center center;
+  transition: all 0.3s ease;
+}
+
+li:hover > img,
+li.selected > img {
+  filter: saturate(100%) brightness(90%);
+  transition: all 0.3s ease;
+}
+li:hover .seg {
+  color: var(--typeVid);
+}

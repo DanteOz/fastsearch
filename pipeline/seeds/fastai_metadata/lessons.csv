@@ -1,0 +1,161 @@
+lesson_id,video_id,name,lesson_url,forum_url,course_id
+0,8SF_h3xF3cE,Lesson 1,https://course.fast.ai/Lessons/lesson1.html,https://forums.fast.ai/t/lesson-1-official-topic/95287,0
+1,F4tvM4Vb3A0,Lesson 2,https://course.fast.ai/Lessons/lesson2.html,https://forums.fast.ai/t/lesson-2-official-topic/96033,0
+2,hBBOjCiFcuo,Lesson 3,https://course.fast.ai/Lessons/lesson3.html,https://forums.fast.ai/t/lesson-3-official-topic/96254,0
+3,toUgBQv1BT8,Lesson 4,https://course.fast.ai/Lessons/lesson4.html,https://forums.fast.ai/t/lesson-4-official-topic/96441,0
+4,_rXzeWq4C6w,Lesson 5,https://course.fast.ai/Lessons/lesson5.html,https://forums.fast.ai/t/lesson-5-official-topic/96491,0
+5,AdhG64NF76E,Lesson 6,https://course.fast.ai/Lessons/lesson6.html,https://forums.fast.ai/t/lesson-6-official-topic/96972,0
+6,p4ZZq0736Po,Lesson 7,https://course.fast.ai/Lessons/lesson7.html,https://forums.fast.ai/t/lesson-7-official-topic/97076,0
+7,htiNBPxcXgo,Lesson 8,https://course.fast.ai/Lessons/lesson8.html,https://forums.fast.ai/t/lesson-8-official-topic/97159,0
+8,_7rMfsA24Ls,Lesson 9,,https://forums.fast.ai/t/lesson-9-official-topic/100562,1
+9,0_BBRNYInx8,Lesson 9A,,https://forums.fast.ai/t/lesson-9-official-topic/100562,1
+10,mYpjmM7O-30,Lesson 9B,,https://forums.fast.ai/t/lesson-9-official-topic/100562,1
+11,6StU6UtZEbU,Lesson 10,,https://forums.fast.ai/t/lesson-10-official-topic/101171,1
+12,_QUEXsHfsA0,Lesson 1,https://course20.fast.ai/videos/?lesson=1,https://forums.fast.ai/t/lesson-1-official-topic/65626,2
+13,BvHmRx14HQ8,Lesson 2,https://course20.fast.ai/videos/?lesson=2,https://forums.fast.ai/t/lesson-2-official-topic/66294,2
+14,5L3Ao5KuCC4,Lesson 3,https://course20.fast.ai/videos/?lesson=3,https://forums.fast.ai/t/lesson-3-official-topic/67244,2
+15,p50s63nPq9I,Lesson 4,https://course20.fast.ai/videos/?lesson=4,https://forums.fast.ai/t/lesson-4-official-topic/68643,2
+16,krIVOb23EH8,Lesson 5,https://course20.fast.ai/videos/?lesson=5,https://forums.fast.ai/t/lesson-5-official-topic/68039,2
+17,cX30jxMNBUw,Lesson 6,https://course20.fast.ai/videos/?lesson=6,https://forums.fast.ai/t/lesson-6-official-topic/69306,2
+18,VEG5xT5gAHc,Lesson 7,https://course20.fast.ai/videos/?lesson=7,https://forums.fast.ai/t/lesson-7-official-topic/69896,2
+19,WjnwWeGjZcM,Lesson 8,https://course20.fast.ai/videos/?lesson=8,https://forums.fast.ai/t/lesson-8-official-topic/70494,2
+20,gGxe2mN3kAg,Lesson 0,,,2
+21,XfoYk_Z5AkI,Lesson 1,https://course19.fast.ai/videos/?lesson=1,https://forums.fast.ai/t/lesson-1-official-resources-and-updates/27936,3
+22,ccMHJeQU4Qw,Lesson 2,https://course19.fast.ai/videos/?lesson=2,https://forums.fast.ai/t/lesson-2-official-resources-and-updates/28630,3
+23,MpZxV6DVsmM,Lesson 3,https://course19.fast.ai/videos/?lesson=3,https://forums.fast.ai/t/lesson-3-official-resources-and-updates/29732,3
+24,qqt3aMPB81c,Lesson 4,https://course19.fast.ai/videos/?lesson=4,https://forums.fast.ai/t/lesson-4-official-resources-and-updates/30317,3
+25,CJKnDu2dxOE,Lesson 5,https://course19.fast.ai/videos/?lesson=5,https://forums.fast.ai/t/lesson-5-official-resources-and-updates/30863,3
+26,hkBa9pU-H48,Lesson 6,https://course19.fast.ai/videos/?lesson=6,https://forums.fast.ai/t/lesson-6-official-resources-and-updates/31441,3
+27,9spwoDYwW_I,Lesson 7,https://course19.fast.ai/videos/?lesson=7,https://forums.fast.ai/t/lesson-7-official-resources/32553,3
+28,4u8FxNEDUeg,Lesson 8,https://course19.fast.ai/videos/?lesson=8,https://forums.fast.ai/t/lesson-1-official-resources-and-updates/27936,4
+29,AcA8HAYh7IE,Lesson 9,https://course19.fast.ai/videos/?lesson=9,https://forums.fast.ai/t/lesson-2-official-resources-and-updates/28630,4
+30,HR0lt1hlR6U,Lesson 10,https://course19.fast.ai/videos/?lesson=10,https://forums.fast.ai/t/lesson-3-official-resources-and-updates/29732,4
+31,hPQKzsjTyyQ,Lesson 11,https://course19.fast.ai/videos/?lesson=11,https://forums.fast.ai/t/lesson-4-official-resources-and-updates/30317,4
+32,vnOpEwmtFJ8,Lesson 12,https://course19.fast.ai/videos/?lesson=12,https://forums.fast.ai/t/lesson-5-official-resources-and-updates/30863,4
+33,3TqN_M1L4ts,Lesson 13,https://course19.fast.ai/videos/?lesson=13,https://forums.fast.ai/t/lesson-6-official-resources-and-updates/31441,4
+34,8wd8zFzTG38,Lesson 14,https://course19.fast.ai/videos/?lesson=14,https://forums.fast.ai/t/lesson-7-official-resources/32553,4
+35,IPBSB1HLNLo,Lesson 1,https://course18.fast.ai/lessons/lesson1.html,http://forums.fast.ai/t/wiki-lesson-1,5
+36,JNxcznsrRb8,Lesson 2,https://course18.fast.ai/lessons/lesson2.html,http://forums.fast.ai/t/wiki-lesson-2,5
+37,9C06ZPF8Uuc,Lesson 3,https://course18.fast.ai/lessons/lesson3.html,http://forums.fast.ai/t/wiki-lesson-3,5
+38,gbceqO8PpBg,Lesson 4,https://course18.fast.ai/lessons/lesson4.html,http://forums.fast.ai/t/wiki-lesson-4,5
+39,J99NV9Cr75I,Lesson 5,https://course18.fast.ai/lessons/lesson5.html,http://forums.fast.ai/t/wiki-lesson-5,5
+40,sHcLkfRrgoQ,Lesson 6,https://course18.fast.ai/lessons/lesson6.html,http://forums.fast.ai/t/wiki-lesson-6,5
+41,H3g26EVADgY,Lesson 7,https://course18.fast.ai/lessons/lesson7.html,http://forums.fast.ai/t/wiki-lesson-7,5
+42,Z0ssNAbe81M,Lesson 8,https://course18.fast.ai/lessons/lesson8.html,http://forums.fast.ai/t/part-2-lesson-8-wiki,6
+43,0frKXR-2PBY,Lesson 9,https://course18.fast.ai/lessons/lesson9.html,http://forums.fast.ai/t/part-2-lesson-9-wiki,6
+44,h5Tz7gZT9Fo,Lesson 10,https://course18.fast.ai/lessons/lesson10.html,http://forums.fast.ai/t/part-2-lesson-10-wiki,6
+45,tY0n9OT5_nA,Lesson 11,https://course18.fast.ai/lessons/lesson11.html,http://forums.fast.ai/t/part-2-lesson-11-wiki,6
+46,ondivPiwQho,Lesson 12,https://course18.fast.ai/lessons/lesson12.html,http://forums.fast.ai/t/part-2-lesson-12-wiki,6
+47,xXXiC4YRGrQ,Lesson 13,https://course18.fast.ai/lessons/lesson13.html,http://forums.fast.ai/t/part-2-lesson-13-wiki,6
+48,nG3tT31nPmQ,Lesson 14,https://course18.fast.ai/lessons/lesson14.html,http://forums.fast.ai/t/part-2-lesson-14-wiki,6
+49,ACU-T9L4_lI,Lesson 0,https://course17.fast.ai/lessons/lesson0.html,https://forums.fast.ai/t/lesson-0-discussion/263,7
+50,kzt3-FHdAeM,Overview,https://course17.fast.ai/lessons/lesson1.html,https://forums.fast.ai/t/lesson-1-discussion/96,7
+51,Th_ckFbc6bI,Lesson 1,https://course17.fast.ai/lessons/lesson1.html,https://forums.fast.ai/t/lesson-1-discussion/96,7
+52,e3aM6XTekJc,Lesson 2,https://course17.fast.ai/lessons/lesson2.html,https://forums.fast.ai/t/lesson-9-wiki/1809,7
+53,6kwQEBMandw,Lesson 3,https://course17.fast.ai/lessons/lesson3.html,https://forums.fast.ai/t/lesson-3-discussion/186,7
+54,V2h3IOBDvrA,Lesson 4,https://course17.fast.ai/lessons/lesson4.html,https://forums.fast.ai/t/lesson-4-discussion/210,7
+55,qvRL74L81lg,Lesson 5,https://course17.fast.ai/lessons/lesson5.html,https://forums.fast.ai/t/lesson-5-discussion/233,7
+56,ll9y1U0SoVY,Lesson 6,https://course17.fast.ai/lessons/lesson6.html,https://forums.fast.ai/t/lesson-6-discussion/245,7
+57,Q0z-l2KRYFY,Lesson 7,https://course17.fast.ai/lessons/lesson7.html,https://forums.fast.ai/t/lesson-7-discussion/252,7
+58,cRjPVN3oo4s,Lesson 8,https://course17.fast.ai/lessons/lesson8.html,https://forums.fast.ai/t/lesson-8-wiki/1639,8
+59,I-P363wSv0Q,Lesson 9,https://course17.fast.ai/lessons/lesson9.html,https://forums.fast.ai/t/lesson-9-wiki/1809,8
+60,uv0gmrXSXVg,Lesson 10,https://course17.fast.ai/lessons/lesson10.html,https://forums.fast.ai/t/lesson-10-wiki/1937,8
+61,bZmJvmxfH6I,Lesson 11,https://course17.fast.ai/lessons/lesson11.html,https://forums.fast.ai/t/lesson-11-wiki/2094,8
+62,jy1w0mPCHb0,Lesson 12,https://course17.fast.ai/lessons/lesson12.html,https://forums.fast.ai/t/lesson-12-wiki/2222,8
+63,-lx2shfA-5s,Lesson 13,https://course17.fast.ai/lessons/lesson13.html,https://forums.fast.ai/t/lesson-13-wiki/2332,8
+64,1-NYPQw5THU,Lesson 14,https://course17.fast.ai/lessons/lesson14.html,https://forums.fast.ai/t/lesson-14-wiki/2469,8
+65,cce8ntxP_XI,Lesson 1,https://github.com/fastai/course-nlp/blob/master/1-what-is-nlp.ipynb,,9
+66,tG3pUwmGjsc,Lesson 2,https://github.com/fastai/course-nlp/blob/master/2-svd-nmf-topic-modeling.ipynb,,9
+67,lRZ4aMaXPBI,Lesson 3,https://github.com/fastai/course-nlp/blob/master/2b-odds-and-ends.ipynb,,9
+68,hp2ipC5pW4I,Lesson 4,https://github.com/fastai/course-nlp/blob/master/3-logreg-nb-imdb.ipynb,,9
+69,dt7sArnLo1g,Lesson 5,https://github.com/fastai/course-nlp/blob/master/3-logreg-nb-imdb.ipynb,,9
+70,z8-Tbrg1-rE,Lesson 6,https://github.com/fastai/course-nlp/blob/master/3b-more-details.ipynb,,9
+71,Q1zLqfnEXdw,Lesson 7,https://github.com/fastai/course-nlp/blob/master/4-regex.ipynb,,9
+72,PNNHaQUQqW8,Lesson 8,https://github.com/fastai/course-nlp/blob/master/5-nn-imdb.ipynb,,9
+73,5gCQvuznKn0,Lesson 9,https://github.com/fastai/course-nlp/blob/master/review-cv-transfer.ipynb,,9
+74,MDX_x6rKXAs,Lesson 10,,,9
+75,l1rlFh0PmZw,Lesson 11,https://github.com/fastai/course-nlp/blob/master/6-rnn-english-numbers.ipynb,,9
+76,IfsjMg4fLWQ,Lesson 12,https://github.com/fastai/course-nlp/blob/master/7-seq2seq-translation.ipynb,,9
+77,boxV8Od4jqQ,Lesson 13,https://github.com/nikhgarg/EmbeddingDynamicStereotypes,,9
+78,3oEb_fFmPnY,Lesson 14,https://github.com/fastai/course-nlp/blob/master/7b-seq2seq-nucleus.ipynb,,9
+79,Bl6WVj6wQaE,Lesson 15,https://github.com/fastai/course-nlp/blob/master/6b-rnn-english-numbers-GRU.ipynb,,9
+80,pThqge9QDn8,Lesson 16,,,9
+81,AFkGPmU16QA,Lesson 17,https://github.com/fastai/course-nlp/blob/master/8-translation-transformer.ipynb,,9
+82,KzfyftiH7R8,Lesson 18,https://github.com/fastai/course-nlp/blob/master/8-translation-transformer.ipynb,,9
+83,vbva2RN-rbQ,Lesson 19,,,9
+84,8iGzBMboA0I,Lesson 1,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/1.%20Why%20are%20we%20here.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+85,kgd40iDT8yY,Lesson 2,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/2.%20Topic%20Modeling%20with%20NMF%20and%20SVD.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+86,C8KEtrWjjyo,Lesson 3,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/2.%20Topic%20Modeling%20with%20NMF%20and%20SVD.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+87,Ys8R2nUTOAk,Lesson 4,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/3.%20Background%20Removal%20with%20Robust%20PCA.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+88,O2x5KPJr5ag,Lesson 5,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/3.%20Background%20Removal%20with%20Robust%20PCA.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+89,YY9_EYNj5TY,Lesson 6,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/4.%20Compressed%20Sensing%20of%20CT%20Scans%20with%20Robust%20Regression.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+90,ZUGkvIM6ehM,Lesson 7,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/4.%20Compressed%20Sensing%20of%20CT%20Scans%20with%20Robust%20Regression.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+91,SjX55V8zDXI,Lesson 8,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/6.%20How%20to%20Implement%20Linear%20Regression.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+92,AbB-w77yxD0,Lesson 9,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/7.%20PageRank%20with%20Eigen%20Decompositions.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+93,1kw8bpA9QmQ,Lesson 10,https://github.com/fastai/numerical-linear-algebra/blob/master/nbs/8.%20Implementing%20QR%20Factorization.ipynb,https://forums.fast.ai/c/lin-alg/11,10
+94,CzdWqFTmn0Y,Lesson 1,https://course18.fast.ai/lessonsml1/lesson1.html,https://forums.fast.ai/t/wiki-thread-lesson-1/6825,11
+95,blyXCk4sgEg,Lesson 2,https://course18.fast.ai/lessonsml1/lesson2.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-2/7126,11
+96,YSFG_W8JxBo,Lesson 3,https://course18.fast.ai/lessonsml1/lesson3.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-3/7293,11
+97,0v93qHDqq_g,Lesson 4,https://course18.fast.ai/lessonsml1/lesson4.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-4/7540,11
+98,3jl2h9hSRvc,Lesson 5,https://course18.fast.ai/lessonsml1/lesson5.html,https://forums.fast.ai/t/lesson-5-wiki/7672,11
+99,BFIYUvBRTpE,Lesson 6,https://course18.fast.ai/lessonsml1/lesson6.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-6/7857,11
+100,O5F9vR2CNYI,Lesson 7,https://course18.fast.ai/lessonsml1/lesson7.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-7/7950,11
+101,DzE0eSdy5Hk,Lesson 8,https://course18.fast.ai/lessonsml1/lesson8.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-8/8157,11
+102,PGC0UxakTvM,Lesson 9,https://course18.fast.ai/lessonsml1/lesson9.html,https://forums.fast.ai/t/wiki-lesson-thread-lesson-9/8438,11
+103,37sFIak42Sc,Lesson 10,https://course18.fast.ai/lessonsml1/lesson10.html,http://forums.fast.ai/t/wiki-lesson-thread-lesson-10,11
+104,XJ_waZlJU8g,Lesson 11,https://course18.fast.ai/lessonsml1/lesson11.html,http://forums.fast.ai/t/lesson-11-wiki-thread,11
+105,5_xFdhfUnvQ,Lesson 12,https://course18.fast.ai/lessonsml1/lesson12.html,http://forums.fast.ai/t/wiki-lesson-thread-lesson-12,11
+106,eFjk79ykWZk,Lesson 1,https://ethics.fast.ai/videos/?lesson=1,https://forums.fast.ai/t/week-1-disinformation-discussion/62088,12
+107,mG-cTS3fnnw,Lesson 2,https://ethics.fast.ai/videos/?lesson=2,https://forums.fast.ai/t/week-2-bias-fairness-discussion/62556,12
+108,s0s5A4xK0xQ,Lesson 3,https://ethics.fast.ai/videos/?lesson=3,https://forums.fast.ai/t/week-3-ethical-foundations-practical-tools/62963,12
+109,79_rwZhewbQ,Lesson 4.1,https://ethics.fast.ai/videos/?lesson=4,https://forums.fast.ai/t/week-4-privacy-and-surveillance-discussion/63253,12
+110,HwfeDeqbmsI,Lesson 4.2,https://ethics.fast.ai/videos/?lesson=5,https://forums.fast.ai/t/week-4-privacy-and-surveillance-discussion/63253,12
+111,US42H1znvKU,Lesson 5.1,https://ethics.fast.ai/videos/?lesson=6,https://forums.fast.ai/t/week-5-our-ecosystem/64114,12
+112,TKYr4sS1SFw,Lesson 5.2,https://ethics.fast.ai/videos/?lesson=7,https://forums.fast.ai/t/week-5-our-ecosystem/64114,12
+113,upU-_ECq80Y,Lesson 5.3,https://ethics.fast.ai/videos/?lesson=8,https://forums.fast.ai/t/week-5-our-ecosystem/64114,12
+114,Nzvoc7aaEzw,Lesson 6,https://ethics.fast.ai/videos/?lesson=9,https://forums.fast.ai/t/week-6-algorithmic-colonialism-and-next-steps/64703,12
+115,CGpR2ILao5M,Session 1,,https://forums.fast.ai/t/apl-study-session-1/97258,13
+116,EZrkBxFa9LQ,Session 2,,https://forums.fast.ai/t/apl-study-session-2/97284,13
+117,u6fHrjKjb3I,Session 3,,https://forums.fast.ai/t/apl-study-session-3/97307,13
+118,N3m1OgFj2dQ,Session 4,,https://forums.fast.ai/t/apl-study-session-4/97324,13
+119,5x51s_xuPDA,Session 5,,https://forums.fast.ai/t/apl-study-session-5/97379,13
+120,bmJrYcoKwGg,Session 6,,https://forums.fast.ai/t/fast-ai-apl-study-session-6/97398,13
+121,e_71xO0Cf-Y,Session 7,,https://forums.fast.ai/t/fast-ai-apl-study-session-7/97417,13
+122,bRr7V38Oa7o,Session 8,,https://forums.fast.ai/t/fast-ai-apl-study-session-8/97488,13
+123,_JK3WNq3BAg,Session 9,,https://forums.fast.ai/t/fast-ai-apl-study-session-9/97510,13
+124,HyERdTC69UE,Session 10,,https://forums.fast.ai/t/fast-ai-apl-study-session-10/97530,13
+125,S9cfN9oVI5I,Session 11 (w/ Adám Brudzewsky),,https://forums.fast.ai/t/fast-ai-apl-study-session-11/97557,13
+126,nT26xUqdi04,Session 12,,https://forums.fast.ai/t/fast-ai-apl-study-session-12/97949,13
+127,du77RpFBEaE,Session 13,,https://forums.fast.ai/t/fast-ai-apl-study-session-13/98031,13
+128,ofkks-94CDc,Session 14,,https://forums.fast.ai/t/fast-ai-apl-study-session-14/98070,13
+129,bYdAEut4xhc,Session 15,,https://forums.fast.ai/t/fast-ai-apl-study-session-15/98107,13
+130,K7Q-SfYu-X8,Session 16,,https://forums.fast.ai/t/fast-ai-apl-study-session-16/98202,13
+131,nNQg3BYu228,Session 17,,https://forums.fast.ai/t/fast-ai-apl-study-session-17-final-session/98231,13
+132,56sIyFjihEc,Live Coding 1,,https://forums.fast.ai/t/live-coding-1/96649,14
+133,0pWjZByJ3Lk,Live Coding  2,,https://forums.fast.ai/t/live-coding-2/96649,14
+134,B6BQiIgiEks,Live Coding 3,,https://forums.fast.ai/t/live-coding-3/96707,14
+135,uKUMT6Bj4l8,Live Coding 4,,https://forums.fast.ai/t/live-coding-4/96727,14
+136,gdsa2VawOeM,Live Coding 5,,https://forums.fast.ai/t/live-coding-5/96733,14
+137,V3cN-bqFUh4,Live Coding 6,,https://forums.fast.ai/t/live-coding-6/96794,14
+138,cagqUrHMDJ0,Live Coding 7,,https://forums.fast.ai/t/live-coding-7/96811,14
+139,-Scs4gbwWXg,Live Coding 8,,https://forums.fast.ai/t/live-coding-8/96825,14
+140,EK5wJRzffas,Live Coding 9,,https://forums.fast.ai/t/live-coding-9/96847,14
+141,zhBRynq9Yvo,Live Coding 10,,https://forums.fast.ai/t/live-coding-10/96874,14
+142,j-zMF2VirA8,Live Coding 11,,https://forums.fast.ai/t/live-coding-11/96891,14
+143,GuCkpjXHdTc,Live Coding 12,,https://forums.fast.ai/t/live-coding-12/96909,14
+144,INrkhUGCXHg,Live Coding 13,,https://forums.fast.ai/t/live-coding-13/96924,14
+145,cs6di5g4Yyo,Live Coding 14,,https://forums.fast.ai/t/live-coding-14/97011,14
+146,6JGoes9_bPs,Live Coding 15,,https://forums.fast.ai/t/live-coding-15/97024,14
+147,WhuhnJMNack,Live Coding 16,,https://forums.fast.ai/t/live-coding-16/97059,14
+148,bk2ylRhka_8,Live Coding 17,,https://forums.fast.ai/t/live-coding-17/97166,14
+149,k6QSqz9_vQA,Live Coding 18,,https://forums.fast.ai/t/live-coding-18/97187,14
+150,44pe47sB4BI,Walk Through 1,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-1/53940,15
+151,yEe5ZUMLEys,Walk Through  2,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-2/53978,15
+152,nLhcv71IV6Q,Walk Through 3,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-3/54067,15
+153,ntqOMsFq7Jo,Walk Through 4,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-4/54137,15
+154,GcMGchBJeXk,Walk Through 5,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-5/54405,15
+155,8i9bo5wLSE4,Walk Through 6,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-6/54775,15
+156,H_7bcfaLrdI,Walk Through 7,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-7/54924,15
+157,yL1un5SH63k,Walk Through 8,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-8/55068,15
+158,IbBqFVBpOZoY,Walk Through 9,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-9/55234,15
+159,5py5M2DqcRc,Walk Through 10,,https://forums.fast.ai/t/fastai-v2-code-walk-thru-10/55324,15

@@ -1,0 +1,163 @@
+.theater {
+  height: 520px;
+  margin-top: -520px;
+}
+
+.slideDown {
+  transition: margin-top 0.2s ease-in 0.1s;
+  margin-top: 0px;
+}
+
+#videoPanel {
+  width: var(--contentWidth);
+  height: 405px;
+}
+
+.metaPanel {
+  width: var(--contentWidth);
+  margin-top: 0px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.02em;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: var(--bkgMeta);
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2e3542;
+  width: 690px;
+  height: 54px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#segmentStart {
+  width: 120px;
+  min-width: 120px;
+  height: 30px;
+  border-radius: 4px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: url("/img/back.svg") no-repeat center left 12px var(--btnFB);
+  padding-left: 37px;
+  padding-right: 20px;
+  color: var(--bkgBody);
+  font-weight: 600;
+}
+
+#segmentStart:hover {
+  background-color: var(--accent);
+}
+
+#feedback {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#btn-fb-yes,
+#btn-fb-no {
+  width: 36px;
+  height: 30px;
+  border: none;
+  transition: all 0.4 ease;
+  cursor: pointer;
+}
+
+#btn-fb-yes {
+  margin-left: 10px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: url("/img/yes.svg") no-repeat center center var(--btnFB);
+  transition: all 0.4 ease;
+}
+
+#btn-fb-no {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-left: 2px;
+  background: url("/img/no.svg") no-repeat center center var(--btnFB);
+  transition: all 0.4 ease;
+}
+
+.selectedYES,
+#btn-fb-yes:hover {
+  background-color: var(--green) !important;
+  transition: all 0.4 ease;
+}
+
+.selectedNO,
+#btn-fb-no:hover {
+  background-color: var(--red) !important;
+  transition: all 0.4 ease;
+}
+
+#resources {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+#resources a {
+  width: 60px;
+  height: 30px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #909193;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#resources a:first-of-type {
+  margin-left: 15px;
+}
+
+#resources a:hover {
+  color: var(--blue);
+}
+
+#lesson {
+  background: url("/img/lesson.svg") no-repeat center left;
+  padding-left: 25px;
+}
+
+#forum {
+  background: url("/img/forum.svg") no-repeat center left;
+  padding-left: 25px;
+}
+
+#course {
+  background: url("/img/course.svg") no-repeat center left;
+  padding-left: 25px;
+}
+
+#resources button:hover {
+  background-color: #5d737e;
+}
+#resources a.btn-disabled {
+  pointer-events: none !important;
+  opacity: 0.35 !important;
+}

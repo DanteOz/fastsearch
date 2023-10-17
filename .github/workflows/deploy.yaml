@@ -1,0 +1,100 @@
+name: "Deploy"
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - "main"
+  #   paths:
+  #     - ".github/**"
+  #     - "backend/**"
+  #     - "infra/**"
+  #     - "frontend/**"
+  #     - "pipeline/**"
+
+jobs:
+  deploy-app:
+    name: Deploy App
+    runs-on: ubuntu-latest
+    env:
+      CERTIFICATE_ARN: ${{secrets.CERTIFICATE_ARN}}
+      CDK_DEFAULT_ACCOUNT: ${{secrets.CDK_DEFAULT_ACCOUNT}}
+      CDK_DEFAULT_REGION: ${{secrets.CDK_DEFAULT_REGION}}
+      QDRANT_HOST: ${{secrets.QDRANT_HOST}}
+      QDRANT_API_KEY: ${{secrets.QDRANT_API_KEY}}
+      QDRANT_COLLECTION: ${{secrets.QDRANT_COLLECTION}}
+      NUM_CANDIDATES: ${{secrets.NUM_CANDIDATES}}
+      NUM_RESULTS: ${{secrets.NUM_RESULTS}}
+      HF_TOKEN: ${{secrets.HF_TOKEN}}
+      RETRIEVER_MODEL: ${{secrets.RETRIEVER_MODEL}}
+      RANKING_MODEL: ${{secrets.RANKING_MODEL}}
+      PS_HOST: ${{secrets.PS_HOST}}
+      PS_USER: ${{secrets.PS_USER}}
+      PS_PSWD: ${{secrets.PS_PSWD}}
+      PS_DB: ${{secrets.PS_DB}}
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Front-end Dependencies
+        run: |
+          cd frontend
+          npm i
+  
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+      
+      - name: Install CDK
+        run: npm i -g aws-cdk
+        shell: bash
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+          cache: 'pip' 
+
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip 
+          pip install poetry
+          cd infra
+          poetry install
+          cd ..
+      
+      - name: Synth CDK Template
+        run: cdk synth > /dev/null
+
+      - name: Deploy CDK template
+        run: cdk deploy > /dev/null
+  
+  deploy-pipeline:
+    name: Deploy Pipeline
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+          cache: 'pip' 
+      
+      - name: Install Modal
+        run: |
+          python -m pip install --upgrade pip
+          pip install modal
+      
+      - name: Deploy job
+        run: |
+          modal deploy pipeline/modal/transcribe.py

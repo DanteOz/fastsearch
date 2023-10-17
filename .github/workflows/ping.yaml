@@ -1,0 +1,19 @@
+name: Free Tier Ping
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs every 12 hours (at the top of the hour)
+  workflow_dispatch: {}
+
+
+jobs:
+  post_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make POST request
+        run: |
+          curl \
+            -X POST \
+            -d '{"query": "BREAKER"}' \
+            -H "Content-Type: application/json"  \
+            https://fastsearch.danteoz.com/api/search

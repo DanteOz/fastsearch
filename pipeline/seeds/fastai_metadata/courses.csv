@@ -1,0 +1,17 @@
+course_id,playlist_id,name,course_url
+0,PLfYUBJiXbdtSvpQjSnJJ_PmDQB_VyT5iU,Part 1 (2022),https://course.fast.ai
+1,PLfYUBJiXbdtRUvTUYpLdfHHp9a58nWVXP,Part 2 (2022),https://forums.fast.ai/t/about-the-part-2-2022-course/99259
+2,PLfYUBJiXbdtRL3FMB3GoWHRI8ieU6FhfM,Part 1 (2020),https://course20.fast.ai
+3,PLfYUBJiXbdtSIJb-Qd3pw0cqCbkGeS0xn,Part 1 (2019),https://course19.fast.ai
+4,PLfYUBJiXbdtTIdtE1U8qgyxo4Jy2Y91uj,Part 2 (2019),https://course19.fast.ai/part2
+5,PLfYUBJiXbdtS2UQRzyrxmyVHoGW0gmLSM,Part 1 (2018),https://course18.fast.ai
+6,PLfYUBJiXbdtTttBGq-u2zeY1OTjs5e-Ia,Part 2 (2018),https://course18.fast.ai/part2.html
+7,p1-2017-stub,Part 1 (2017),https://course17.fast.ai/index.html
+8,p2-2017-stub,Part 2 (2017),https://course17.fast.ai/part2.html
+9,PLtmWHNX-gukKocXQOkQjuVxglSDYWsSh9,Intro to NLP,https://github.com/fastai/course-nlp
+10,PLtmWHNX-gukIc92m1K0P6bIOnZb-mg0hY,Computational Linear Algebra,https://github.com/fastai/numerical-linear-algebra/tree/master
+11,PLfYUBJiXbdtSyktd8A_x0JNd6lxDcZE96,Intro to Machine Learning,https://course18.fast.ai/ml
+12,PLtmWHNX-gukKHo6LBrdq82QadvUEwyaJ7,Data Ethics,https://ethics.fast.ai
+13,PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU,APL Study Group,https://forums.fast.ai/t/apl-array-programming/97188
+14,PLfYUBJiXbdtSLBPJ1GMx-sQWf6iNhb8mM,Live Coding,https://forums.fast.ai/t/live-coding-aka-walk-thrus/96617
+15,PLfYUBJiXbdtSWRCYUHh-ThVCC39bp5yiq,Code Walk-Throughs,https://forums.fast.ai/t/fastai-v2-daily-code-walk-thrus/53839
