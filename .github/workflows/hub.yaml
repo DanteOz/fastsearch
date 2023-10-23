@@ -34,6 +34,7 @@ jobs:
           SSH_USER: ${{secrets.SSH_USER}}
           SSH_KEY: ${{secrets.SSH_KEY}}
           DAGSTER_PORT: ${{secrets.DAGSTER_PORT}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           poetry run launch_backfill.py -C backfill/
         
