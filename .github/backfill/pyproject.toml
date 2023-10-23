@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "embed-backfill"
+version = "0.1.0"
+description = ""
+authors = ["Dante Oz <me@danteoz.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+grpcio = {version = "1.47.5", source = "grpcio"}
+dagster-graphql = "1.5.4"
+sshtunnel = "^0.4.0"
+
+[[tool.poetry.source]]
+name = "grpcio"
+url = "https://github.com/dagster-io/build-grpcio/wiki/Wheels"
+priority = "explicit"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

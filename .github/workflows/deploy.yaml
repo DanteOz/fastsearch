@@ -12,6 +12,31 @@ on:
   #     - "pipeline/**"
 
 jobs:
+  deploy-pipeline:
+    name: Deploy Pipeline
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+          cache: 'pip' 
+      
+      - name: Install Modal
+        run: |
+          python -m pip install --upgrade pip
+          pip install modal
+      
+      - name: Deploy job
+        run: |
+          modal deploy pipeline/modal/transcribe.py
+
   deploy-app:
     name: Deploy App
     runs-on: ubuntu-latest
@@ -74,27 +99,3 @@ jobs:
       - name: Deploy CDK template
         run: cdk deploy > /dev/null
   
-  deploy-pipeline:
-    name: Deploy Pipeline
-    runs-on: ubuntu-latest
-    env:
-      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-    steps:
-      - name: Checkout release
-        uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11' 
-          cache: 'pip' 
-      
-      - name: Install Modal
-        run: |
-          python -m pip install --upgrade pip
-          pip install modal
-      
-      - name: Deploy job
-        run: |
-          modal deploy pipeline/modal/transcribe.py
