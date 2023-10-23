@@ -1,7 +1,10 @@
 import os
+import warnings
 
 import dagster
 from dagster import Definitions, EnvVar, load_assets_from_modules
+
+warnings.filterwarnings("ignore", category=dagster.ExperimentalWarning)
 
 from fastpipeline import sensors
 from fastpipeline.assets import (
@@ -58,4 +61,8 @@ resources = {
 }
 
 
-defs = Definitions(assets=all_assets, resources=resources, sensors=[sensors.videos_senor])
+defs = Definitions(
+    assets=all_assets,
+    resources=resources,
+    sensors=[sensors.videos_senor],
+)
