@@ -173,3 +173,6 @@ dockerscripts.txt
 
 qdrant/
 pipeline/Untitled-1.ipynb
+# pixi environments
+.pixi
+
