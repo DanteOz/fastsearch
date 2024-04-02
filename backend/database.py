@@ -30,7 +30,4 @@ def ssl_cert_path() -> str:
     raise RuntimeError("Could not find SSL certificate.")
 
 
-engine = create_engine(
-    url=CONNECT_URL,
-    # connect_args={"ssl": {"ca": ssl_cert_path()}},
-)
+engine = create_engine(url=CONNECT_URL)
