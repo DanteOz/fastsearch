@@ -16,3 +16,6 @@ requires-python = ">= 3.8"
 managed = true
 virtual = true
 dev-dependencies = []
+
+[tool.ruff]
+line-length = 110

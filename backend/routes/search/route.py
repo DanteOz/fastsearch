@@ -44,9 +44,7 @@ def insert_query(query: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with engine.connect() as conn:
         conn.execute(
-            text(
-                "INSERT INTO fastsearch.queries (query, timestamp) VALUES (:query, :timestamp);"
-            ),
+            text("INSERT INTO fastsearch.queries (query, timestamp) VALUES (:query, :timestamp);"),
             {"query": query, "timestamp": timestamp},
         )
         conn.commit()
