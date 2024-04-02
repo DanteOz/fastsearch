@@ -79,6 +79,8 @@ protobuf==4.25.3
     # via grpcio-tools
     # via onnxruntime
 psycopg==3.1.18
+psycopg-binary==3.1.18
+    # via psycopg
 pydantic==2.6.4
     # via fastapi
     # via qdrant-client
