@@ -25,14 +25,14 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11' 
-          cache: 'pip' 
-      
+          python-version: "3.11"
+          cache: "pip"
+
       - name: Install Modal
         run: |
           python -m pip install --upgrade pip
           pip install modal
-      
+
       - name: Deploy job
         run: |
           modal deploy pipeline/modal/transcribe.py
@@ -52,10 +52,10 @@ jobs:
       HF_TOKEN: ${{secrets.HF_TOKEN}}
       RETRIEVER_MODEL: ${{secrets.RETRIEVER_MODEL}}
       RANKING_MODEL: ${{secrets.RANKING_MODEL}}
-      PS_HOST: ${{secrets.PS_HOST}}
-      PS_USER: ${{secrets.PS_USER}}
-      PS_PSWD: ${{secrets.PS_PSWD}}
-      PS_DB: ${{secrets.PS_DB}}
+      PGHOST: ${{secrets.PGHOST}}
+      PGDATABASE: ${{secrets.PGDATABASE}}
+      PGUSER: ${{secrets.PGUSER}}
+      PGPASSWORD: ${{secrets.PGPASSWORD}}
     steps:
       - name: Checkout release
         uses: actions/checkout@v3
@@ -69,12 +69,12 @@ jobs:
         run: |
           cd frontend
           npm i
-  
+
       - name: Build Frontend
         run: |
           cd frontend
           npm run build
-      
+
       - name: Install CDK
         run: npm i -g aws-cdk
         shell: bash
@@ -82,8 +82,8 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11' 
-          cache: 'pip' 
+          python-version: "3.11"
+          cache: "pip"
 
       - name: Install Python Dependencies
         run: |
@@ -92,10 +92,9 @@ jobs:
           cd infra
           poetry install
           cd ..
-      
+
       - name: Synth CDK Template
         run: cdk synth > /dev/null
 
       - name: Deploy CDK template
         run: cdk deploy > /dev/null
-  

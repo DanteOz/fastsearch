@@ -33,9 +33,7 @@ class Backend(Construct):
         )
 
         # Add AutoScaling Group as cluster capacity provider
-        capacity_provider = ecs.AsgCapacityProvider(
-            self, "cap-provider", auto_scaling_group=scaling_group
-        )
+        capacity_provider = ecs.AsgCapacityProvider(self, "cap-provider", auto_scaling_group=scaling_group)
         cluster.add_asg_capacity_provider(capacity_provider)
 
         # Define Docker Image
@@ -74,9 +72,7 @@ class Backend(Construct):
         )
 
         # Create ECS service
-        service: ecs.Ec2Service = ecs.Ec2Service(
-            self, "service", cluster=cluster, task_definition=task
-        )
+        service: ecs.Ec2Service = ecs.Ec2Service(self, "service", cluster=cluster, task_definition=task)
 
         # Define Load Balancer
         # https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_ecs/README.html#include-an-application-network-load-balancer

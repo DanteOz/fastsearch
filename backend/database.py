@@ -1,14 +1,16 @@
 import os
-from sqlalchemy import create_engine, URL
 import platform
 from pathlib import Path
 
+from sqlalchemy import URL, create_engine
+
 CONNECT_URL = URL.create(
-    drivername="mysql+mysqldb",
-    username=os.getenv("PS_USER"),
-    password=os.getenv("PS_PSWD"),
-    host=os.getenv("PS_HOST"),
-    database=os.getenv("PS_DB"),
+    drivername="postgresql+psycopg",
+    host=os.getenv("PGHOST"),
+    database=os.getenv("PGDATABASE"),
+    username=os.getenv("PGUSER"),
+    password=os.getenv("PGPASSWORD"),
+    query={"sslmode": "require"},
 )
 
 
@@ -28,7 +30,4 @@ def ssl_cert_path() -> str:
     raise RuntimeError("Could not find SSL certificate.")
 
 
-engine = create_engine(
-    url=CONNECT_URL,
-    connect_args={"ssl": {"ca": ssl_cert_path()}},
-)
+engine = create_engine(url=CONNECT_URL)

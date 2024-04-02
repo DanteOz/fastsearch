@@ -1,0 +1,21 @@
+[project]
+name = "backend"
+dependencies = [
+    "fastapi>=0.110.1",
+    "pydantic>=2.6.4",
+    "uvicorn[standard]>=0.29.0",
+    "onnxruntime>=1.17.1",
+    "transformers>=4.39.3",
+    "qdrant-client>=1.8.2",
+    "sqlalchemy>=2.0",
+    "psycopg[binary]>=3.1.18",
+]
+requires-python = ">= 3.8"
+
+[tool.rye]
+managed = true
+virtual = true
+dev-dependencies = []
+
+[tool.ruff]
+line-length = 110
