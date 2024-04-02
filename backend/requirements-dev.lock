@@ -23,8 +23,6 @@ click==8.1.7
     # via uvicorn
 coloredlogs==15.0.1
     # via onnxruntime
-exceptiongroup==1.2.0
-    # via anyio
 fastapi==0.110.1
 filelock==3.13.3
     # via huggingface-hub
@@ -117,14 +115,12 @@ tqdm==4.66.2
     # via transformers
 transformers==4.39.3
 typing-extensions==4.10.0
-    # via anyio
     # via fastapi
     # via huggingface-hub
     # via psycopg
     # via pydantic
     # via pydantic-core
     # via sqlalchemy
-    # via uvicorn
 urllib3==2.2.1
     # via qdrant-client
     # via requests
