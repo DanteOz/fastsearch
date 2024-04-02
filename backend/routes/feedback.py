@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from sqlalchemy import text
 from database import engine
 from fastapi import APIRouter
 from pydantic import BaseModel
+from sqlalchemy import text
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ class Feedback(BaseModel):
 @router.put("/feedback")
 def feedback(req: Feedback):
     """Insert search result feedback into feedback db."""
-    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with engine.connect() as conn:
         sql = text(
             """
