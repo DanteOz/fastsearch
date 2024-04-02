@@ -1,17 +1,10 @@
 FROM python:3.10-slim-buster
 WORKDIR /code
 
-# INSTALL MYSQLCLIENT DEPENDENCIES
-# https://github.com/PyMySQL/mysqlclient#linux
-RUN apt update && apt install -y \
-    default-libmysqlclient-dev \
-    gcc \
-    pkg-config
-
 # INSTALL PYTHON REQUIREMENTS
-COPY ./requirements.txt .
+COPY ./requirements.lock .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir --upgrade -r /code/requirements.txt
+    pip install --no-cache-dir --upgrade -r /code/requirements.lock
 
 # CACHE WEIGHTS
 ENV TRANSFORMERS_CACHE="./models"
