@@ -10,9 +10,7 @@ from infra.constants import BACKEND_DIR, PROJECT_DIR
 
 
 class Backend(Construct):
-    def __init__(
-        self, scope: Construct, id: str, vpc: ec2.Vpc, vector_db: Construct, **kwargs
-    ) -> None:
+    def __init__(self, scope: Construct, id: str, vpc: ec2.Vpc, vector_db: Construct, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         env_path = PROJECT_DIR / ".env.template"
@@ -43,9 +41,7 @@ class Backend(Construct):
             "Service",
             source=apprunner.Source.from_asset(
                 asset=asset,
-                image_configuration=apprunner.ImageConfiguration(
-                    port=80, environment_variables=env
-                ),
+                image_configuration=apprunner.ImageConfiguration(port=80, environment_variables=env),
             ),
             cpu=apprunner.Cpu.FOUR_VCPU,
             memory=apprunner.Memory.EIGHT_GB,
