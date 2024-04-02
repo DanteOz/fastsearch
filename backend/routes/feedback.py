@@ -22,7 +22,7 @@ def feedback(req: Feedback):
         sql = text(
             """
             INSERT INTO 
-                feedback (query, result_id, feedback, timestamp) 
+                fastsearch.feedback (query, result_id, feedback, timestamp) 
             VALUES (
                 :query, 
                 :result_id, 
