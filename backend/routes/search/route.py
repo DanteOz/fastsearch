@@ -28,7 +28,7 @@ class Query(BaseModel):
 
 
 class Result(BaseModel):
-    id: str
+    id: int
     video_id: str
     title: str
     text: str
@@ -41,7 +41,7 @@ class Result(BaseModel):
 
 def insert_query(query: str):
     """Insert user query into feedback db."""
-    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with engine.connect() as conn:
         conn.execute(
             text(
@@ -77,5 +77,9 @@ def search(req: Query, tasks: BackgroundTasks) -> list[Result]:
     ranked_idxs = ranker(query=req.query, candidates=documents, num_results=NUM_RESULTS)
     ranked_candidates = (candidates[i] for i in ranked_idxs)
 
-    results = list(map(lambda x: Result(id=x.id, **x.payload), ranked_candidates))
+    results = []
+    for candidate in ranked_candidates:
+        candidate.payload["start"] = int(candidate.payload["start"])
+        results.append(Result(id=candidate.id, **candidate.payload))
+
     return results
