@@ -1,7 +1,8 @@
-import modal
 from upath import UPath
 
-stub = modal.Stub("fastsearch")
+import modal
+
+app = modal.App("fastsearch")
 
 MODEL_NAME = "large"
 CACHE_DIR = "/whisper"
@@ -23,7 +24,7 @@ transcribe_image = (
 )
 
 
-@stub.function(
+@app.function(
     gpu="A10G",
     image=transcribe_image,
     secret=modal.Secret.from_name("fastsearch-aws"),
