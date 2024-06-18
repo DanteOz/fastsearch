@@ -11,6 +11,7 @@
     "@solidjs/router": "^0.13.5",
     "@solidjs/start": "^1.0.1",
     "solid-js": "^1.8.17",
+    "valibot": "^0.33.0",
     "vinxi": "^0.3.11"
   },
   "engines": {
