@@ -12,6 +12,7 @@ import {
   createEffect,
 } from "solid-js";
 import { useSearchContext, SearchContextProvider, Feedback } from "~/lib/Context";
+import * as v from "valibot";
 
 import "~/components/Navbar.css";
 import "~/components/Results.css";
@@ -24,6 +25,34 @@ function secToHMS(sec: number): string {
 }
 
 // Fetch
+const ResultsSchema = v.array(
+  v.object({
+    id: v.string(),
+    video_id: v.string(),
+    title: v.string(),
+    text: v.string(),
+    start: v.number(),
+    thumbnail: v.string(),
+    lesson: v.nullable(v.string()),
+    forum: v.nullable(v.string()),
+    course: v.nullable(v.string()),
+  })
+);
+
+async function fetchResults(query: string) {
+  const resp = await fetch("/api/search", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: query }),
+  });
+  if (!resp.ok) {
+    throw new Error(`${resp.status} | ${resp.statusText}`);
+  }
+  const data = await resp.json();
+  const results = v.parse(ResultsSchema, data);
+  return results;
+}
+
 async function submitFeedback(props: { feedback: number; query: string; result_id: string }) {
   return await fetch("/api/feedback", {
     method: "PUT",
@@ -43,17 +72,6 @@ function ErrorMessage(props: { error: Error }) {
       <img src="/img/warning.svg" alt="warning" />
       {props.error.message}
       <span>, please search again.</span>
-    </div>
-  );
-}
-
-function NavBar() {
-  return (
-    <div class="tabsPanel">
-      <img src="/img/logo.svg" alt="FastSearch logo" />
-      <div class="tabs">
-        <a href="/writeup/scope.html">PROJECT WRITEUP</a>
-      </div>
     </div>
   );
 }
@@ -244,7 +262,12 @@ export default function App() {
     <SearchContextProvider>
       <main>
         <div id="header">
-          <NavBar />
+          <div class="tabsPanel">
+            <img src="/img/logo.svg" alt="FastSearch logo" />
+            <div class="tabs">
+              <a href="/writeup/scope.html">PROJECT WRITEUP</a>
+            </div>
+          </div>
           <SearchBar />
         </div>
         <ErrorBoundary fallback={(error) => <ErrorMessage error={error} />}>
