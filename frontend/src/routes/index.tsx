@@ -10,8 +10,11 @@ import {
   untrack,
   createMemo,
   createEffect,
+  Accessor,
+  createResource,
+  Setter,
 } from "solid-js";
-import { useSearchContext, SearchContextProvider, Feedback } from "~/lib/Context";
+import { SetStoreFunction, createStore } from "solid-js/store";
 import * as v from "valibot";
 
 import "~/components/Navbar.css";
@@ -22,6 +25,10 @@ import "~/components/Theater.css";
 // Helper
 function secToHMS(sec: number): string {
   return new Date(sec * 1000).toISOString().slice(11, 19);
+}
+
+function initFeedback(n: number) {
+  return Array(n).fill(null);
 }
 
 // Fetch
@@ -38,6 +45,7 @@ const ResultsSchema = v.array(
     course: v.nullable(v.string()),
   })
 );
+type Results = v.InferOutput<typeof ResultsSchema>;
 
 async function fetchResults(query: string) {
   const resp = await fetch("/api/search", {
@@ -52,6 +60,8 @@ async function fetchResults(query: string) {
   const results = v.parse(ResultsSchema, data);
   return results;
 }
+
+type Feedback = -1 | null | 1;
 
 async function submitFeedback(props: { feedback: number; query: string; result_id: string }) {
   return await fetch("/api/feedback", {
@@ -76,11 +86,9 @@ function ErrorMessage(props: { error: Error }) {
   );
 }
 
-function SearchBar() {
+function SearchBar(props: { setQuery: Setter<string | null> }) {
   let searchBox: HTMLInputElement | undefined;
   let placeholder = "Search fast.ai videos & resources...";
-
-  const { setQuery } = useSearchContext();
 
   const handleQuery = (event: KeyboardEvent | MouseEvent) => {
     if (searchBox) {
@@ -90,7 +98,7 @@ function SearchBar() {
 
       let rawQuery = searchBox.value.trim();
       if (rawQuery.length > 0) {
-        startTransition(() => setQuery(rawQuery));
+        startTransition(() => props.setQuery(rawQuery));
         searchBox.classList.remove("alerto");
       } else {
         if (event instanceof KeyboardEvent) {
@@ -124,59 +132,65 @@ function SearchBar() {
   );
 }
 
-function Results() {
-  const { results, selected, setSelected } = useSearchContext();
-
+function Result(props: {
+  result: Results[number];
+  index: Accessor<number>;
+  selected: Accessor<number | null>;
+  setSelected: Setter<number | null>;
+}) {
   const handleSelection = (index: number) => {
     window.scrollTo(0, 0);
-    setSelected(index);
+    props.setSelected(index);
   };
 
   return (
-    <ul id="results">
-      <For each={results()}>
-        {(result, i) => (
-          <li onClick={[handleSelection, i]} classList={{ selected: selected() === i() }}>
-            <div class="meta">
-              <div class="vid">{result.title}</div>
-              <div class="seg">
-                <div>
-                  <span>{secToHMS(result.start)}</span>
-                  {result.text}
-                </div>
-              </div>
-            </div>
-            <img src={result.thumbnail} alt={`Thumbnail for ${result.title}.`} />
-          </li>
-        )}
-      </For>
-    </ul>
+    <li
+      onClick={[handleSelection, props.index]}
+      classList={{ selected: props.selected() === props.index() }}
+    >
+      <div class="meta">
+        <div class="vid">{props.result.title}</div>
+        <div class="seg">
+          <div>
+            <span>{secToHMS(props.result.start)}</span>
+            {props.result.text}
+          </div>
+        </div>
+      </div>
+      <img src={props.result.thumbnail} alt={`Thumbnail for ${props.result.title}.`} />
+    </li>
   );
 }
 
-function Theater() {
-  const { query, results, selected, feedback, setFeedback } = useSearchContext();
+function Theater(props: {
+  results: Accessor<Results>;
+  query: Accessor<string | null>;
+  selected: Accessor<number | null>;
+  feedback: Feedback[];
+  setFeedback: SetStoreFunction<Feedback[]>;
+}) {
+  const [restart, setRestart] = createSignal(false, { equals: false });
   const result = createMemo(() => {
-    return selected() || selected() == 0 ? results()[selected()!] : null;
+    return props.selected() || props.selected() == 0 ? props.results()[props.selected()!] : null;
   });
   const handleFeedback = (fb: Feedback) => {
-    if (fb && fb !== feedback[selected()!]) {
+    if (fb && fb !== props.feedback[props.selected()!]) {
       try {
         submitFeedback({
           feedback: fb,
-          query: untrack(query)!,
+          query: untrack(props.query)!,
           result_id: result()!.video_id,
         });
-        setFeedback(selected()!, fb);
+        props.setFeedback(props.selected()!, fb);
       } catch (e) {
         alert("Failed to submit feedback. Please retry.");
       }
     }
   };
-  const [restart, setRestart] = createSignal(false, { equals: false });
+
   createEffect(() => {
     // When selected result changes, reset autoplay
-    selected();
+    props.selected();
     setRestart(false);
   });
 
@@ -214,12 +228,12 @@ function Theater() {
               <button
                 id="btn-fb-yes"
                 onClick={[handleFeedback, 1]}
-                classList={{ selectedYES: feedback[selected()!] === 1 }}
+                classList={{ selectedYES: props.feedback[props.selected()!] === 1 }}
               ></button>
               <button
                 id="btn-fb-no"
                 onClick={[handleFeedback, -1]}
-                classList={{ selectedNO: feedback[selected()!] === -1 }}
+                classList={{ selectedNO: props.feedback[props.selected()!] === -1 }}
               ></button>
             </div>
           </div>
@@ -258,27 +272,51 @@ function Theater() {
 }
 
 export default function App() {
+  const [query, setQuery] = createSignal<string | null>(null);
+  const [results] = createResource(query, fetchResults, { initialValue: [] });
+  const [feedback, setFeedback] = createStore<Feedback[]>([]);
+  const [selected, setSelected] = createSignal<number | null>(null);
+  createEffect(() => {
+    setFeedback(Array(results().length).fill(null));
+    setSelected(null);
+  });
+
   return (
-    <SearchContextProvider>
-      <main>
-        <div id="header">
-          <div class="tabsPanel">
-            <img src="/img/logo.svg" alt="FastSearch logo" />
-            <div class="tabs">
-              <a href="/writeup/scope.html">PROJECT WRITEUP</a>
-            </div>
+    <main>
+      <div id="header">
+        <div class="tabsPanel">
+          <img src="/img/logo.svg" alt="FastSearch logo" />
+          <div class="tabs">
+            <a href="/writeup/scope.html">PROJECT WRITEUP</a>
           </div>
-          <SearchBar />
         </div>
+        <SearchBar setQuery={setQuery} />
+      </div>
+      <div id="content" class="content">
         <ErrorBoundary fallback={(error) => <ErrorMessage error={error} />}>
-          <div id="content" class="content">
-            <Suspense>
-              <Theater />
-              <Results />
-            </Suspense>
-          </div>
+          <Suspense>
+            <Theater
+              results={results}
+              query={query}
+              selected={selected}
+              feedback={feedback}
+              setFeedback={setFeedback}
+            />
+            <ul id="results">
+              <For each={results()}>
+                {(result, index) => (
+                  <Result
+                    result={result}
+                    index={index}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                )}
+              </For>
+            </ul>
+          </Suspense>
         </ErrorBoundary>
-      </main>
-    </SearchContextProvider>
+      </div>
+    </main>
   );
 }
