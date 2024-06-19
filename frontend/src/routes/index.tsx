@@ -34,7 +34,7 @@ function initFeedback(n: number) {
 // Fetch
 const ResultsSchema = v.array(
   v.object({
-    id: v.string(),
+    id: v.number(),
     video_id: v.string(),
     title: v.string(),
     text: v.string(),
@@ -45,13 +45,11 @@ const ResultsSchema = v.array(
     course: v.nullable(v.string()),
   })
 );
-type Results = v.InferOutput<typeof ResultsSchema>;
 
 async function fetchResults(query: string) {
-  const resp = await fetch("/api/search", {
-    method: "POST",
+  const params = new URLSearchParams({ query: query });
+  const resp = await fetch(`/api/search?${params.toString()}`, {
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: query }),
   });
   if (!resp.ok) {
     throw new Error(`${resp.status} | ${resp.statusText}`);
@@ -61,19 +59,22 @@ async function fetchResults(query: string) {
   return results;
 }
 
-type Feedback = -1 | null | 1;
-
 async function submitFeedback(props: { feedback: number; query: string; result_id: string }) {
-  return await fetch("/api/feedback", {
-    method: "PUT",
+  const response = await fetch("/api/feedback", {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(props),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error(`${response.status} | ${response.statusText}`);
-    }
   });
+
+  if (!response.ok) {
+    throw new Error(`${response.status} | ${response.statusText}`);
+  }
 }
+
+// Types
+
+type Results = v.InferOutput<typeof ResultsSchema>;
+type Feedback = -1 | null | 1;
 
 // Components
 function ErrorMessage(props: { error: Error }) {

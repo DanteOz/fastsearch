@@ -5,9 +5,9 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        "/api": {
-          target: "http://localhost:800",
-          changeOrigin: true,
+        "/api/": {
+          target: "http://localhost:8000/",
+          changeOrigin: false,
         },
       },
     },

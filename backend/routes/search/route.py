@@ -1,13 +1,13 @@
 import os
 from datetime import datetime
 
-from database import engine
 from fastapi import APIRouter, BackgroundTasks
 from pydantic import BaseModel
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from sqlalchemy import text
 
+from database import engine
 from routes.search.model import ONNXRanker, ONNXRetriever
 
 router = APIRouter()
@@ -21,10 +21,6 @@ NUM_RESULTS = int(os.getenv("NUM_RESULTS"))
 
 retriever = ONNXRetriever(model_id=os.getenv("RETRIEVER_MODEL"))
 ranker = ONNXRanker(model_id=os.getenv("RANKING_MODEL"))
-
-
-class Query(BaseModel):
-    query: str
 
 
 class Result(BaseModel):
@@ -50,10 +46,10 @@ def insert_query(query: str):
         conn.commit()
 
 
-@router.post("/search")
-def search(req: Query, tasks: BackgroundTasks) -> list[Result]:
+@router.get("/search")
+def search(query: str, tasks: BackgroundTasks) -> list[Result]:
     """Find lecture segments relevant to user query."""
-    tasks.add_task(insert_query, query=req.query)
+    tasks.add_task(insert_query, query=query)
 
     client = QdrantClient(
         host=QDRANT_HOST,
@@ -62,7 +58,7 @@ def search(req: Query, tasks: BackgroundTasks) -> list[Result]:
         https=(QDRANT_API_KEY is not None and QDRANT_API_KEY != ""),
     )
     # Stage: Retrival
-    sentence_embed = retriever(req.query)
+    sentence_embed = retriever(query)
     candidates = client.search(
         collection_name=QDRANT_COLLECTION,
         search_params=models.SearchParams(hnsw_ef=len(sentence_embed), exact=False),
@@ -72,7 +68,7 @@ def search(req: Query, tasks: BackgroundTasks) -> list[Result]:
 
     # Stage: Rerank
     documents = [c.payload["text"] for c in candidates]
-    ranked_idxs = ranker(query=req.query, candidates=documents, num_results=NUM_RESULTS)
+    ranked_idxs = ranker(query=query, candidates=documents, num_results=NUM_RESULTS)
     ranked_candidates = (candidates[i] for i in ranked_idxs)
 
     results = []
