@@ -26,11 +26,6 @@ export default function App() {
           <Meta property="twitter:url" content="https://fastsearch.danteoz.com/" />
           <Meta property="twitter:title" content="FastSearch" />
           <Meta property="twitter:description" content="Semantic search for fast.ai lectures." />
-          <script
-            defer
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-            data-cf-beacon='{"token": "9f445c7464784e0e851ca0fc7ff0a4f9"}'
-          ></script>
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}
