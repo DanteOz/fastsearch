@@ -2,19 +2,17 @@ import {
   ErrorBoundary,
   Suspense,
   For,
-  onCleanup,
-  onMount,
   startTransition,
   createSignal,
   Show,
   untrack,
   createMemo,
   createEffect,
-  Accessor,
   createResource,
-  Setter,
+  type Accessor,
+  type Setter,
 } from "solid-js";
-import { SetStoreFunction, createStore } from "solid-js/store";
+import { type SetStoreFunction, createStore } from "solid-js/store";
 import * as v from "valibot";
 
 import "~/components/Navbar.css";
@@ -87,49 +85,41 @@ function ErrorMessage(props: { error: Error }) {
   );
 }
 
+const SearchFormSchema = v.object({
+  query: v.pipe(v.string(), v.trim(), v.minLength(1, "Please enter search term(s)...")),
+});
+
 function SearchBar(props: { setQuery: Setter<string | null> }) {
-  let searchBox: HTMLInputElement | undefined;
-  let placeholder = "Search fast.ai videos & resources...";
+  const submitSearch = (event: SubmitEvent) => {
+    event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement | null;
+    if (form) {
+      const data = v.safeParse(SearchFormSchema, Object.fromEntries(new FormData(form)));
 
-  const handleQuery = (event: KeyboardEvent | MouseEvent) => {
-    if (searchBox) {
-      if (event instanceof KeyboardEvent && event.key !== "Enter") {
-        return;
-      }
-
-      let rawQuery = searchBox.value.trim();
-      if (rawQuery.length > 0) {
-        startTransition(() => props.setQuery(rawQuery));
-        searchBox.classList.remove("alerto");
+      if (data.success) {
+        startTransition(() => props.setQuery(data.output.query));
       } else {
-        if (event instanceof KeyboardEvent) {
-          alert("Please enter search term(s)...");
-        } else if (event instanceof MouseEvent) {
-          searchBox.placeholder = "Please enter search term(s)...";
-          searchBox.classList.add("alerto");
-        }
+        // const search = form.querySelector("input[name=query]") as HTMLFormElement | null;
+        // search?.setCustomValidity("Please enter search term(s)...");
+        // search?.reportValidity();
+        alert(data.issues[0].message);
       }
     }
   };
 
-  onMount(() => document.addEventListener("keypress", handleQuery));
-  onCleanup(() => document.removeEventListener("keypress", handleQuery));
-
   return (
-    <div class="searchPanel">
-      <input
-        type="text"
-        id="search"
-        ref={searchBox}
-        name="search"
-        placeholder={placeholder}
-        onFocus={() => (searchBox!.placeholder = "")}
-        onBlur={() => (searchBox!.placeholder = placeholder)}
-        required
-      />
-      <button id="btn-clear" onClick={() => (searchBox!.value = "")}></button>
-      <button id="btn-search" onClick={handleQuery}></button>
-    </div>
+    <search>
+      <form name="search" onsubmit={submitSearch}>
+        <input
+          type="text"
+          id="search"
+          name="query"
+          placeholder={"Search fast.ai videos & resources..."}
+        />
+        <button id="btn-clear" type="reset" />
+        <button id="btn-search" type="submit" />
+      </form>
+    </search>
   );
 }
 
@@ -277,8 +267,10 @@ export default function App() {
   const [results] = createResource(query, fetchResults, { initialValue: [] });
   const [feedback, setFeedback] = createStore<Feedback[]>([]);
   const [selected, setSelected] = createSignal<number | null>(null);
+
+  // TODO: Refactor to push selected in results data structure
   createEffect(() => {
-    setFeedback(Array(results().length).fill(null));
+    setFeedback(initFeedback(results().length));
     setSelected(null);
   });
 
