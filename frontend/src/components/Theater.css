@@ -1,3 +1,7 @@
+iframe {
+  border: 0px;
+}
+
 .theater {
   height: 520px;
   margin-top: -520px;

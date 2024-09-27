@@ -11,7 +11,7 @@ form[name="search"] {
   margin-bottom: 20px;
 }
 
-#search {
+#query {
   flex-grow: 1;
   height: var(--searchHeight);
   font-size: 16px;
@@ -25,17 +25,17 @@ form[name="search"] {
   letter-spacing: 0.03em;
 }
 
-#search::placeholder {
+#query::placeholder {
   opacity: 0.5;
   letter-spacing: 0.03em;
 }
 
-#search:focus {
+#query:focus {
   outline: none;
 }
 
 /* Hide placeholder text onfocus */
-#search:focus::placeholder {
+#query:focus::placeholder {
   color: transparent;
 }
 
@@ -48,7 +48,7 @@ form[name="search"] {
   cursor: pointer;
 }
 #btnSearch,
-#search {
+#query {
   background-color: transparent !important;
 }
 #btn-clear {
@@ -61,6 +61,6 @@ form[name="search"] {
   border-bottom-right-radius: 4px;
 }
 
-#search:placeholder-shown ~ #btn-clear {
+#query:placeholder-shown ~ #btn-clear {
   display: none;
 }

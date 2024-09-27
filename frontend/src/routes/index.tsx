@@ -29,7 +29,8 @@ function initFeedback(n: number) {
   return Array(n).fill(null);
 }
 
-// Fetch
+// Types
+
 const ResultsSchema = v.array(
   v.object({
     id: v.number(),
@@ -43,6 +44,15 @@ const ResultsSchema = v.array(
     course: v.nullable(v.string()),
   })
 );
+
+const SearchFormSchema = v.object({
+  query: v.pipe(v.string(), v.trim(), v.minLength(1, "Please enter search term(s)...")),
+});
+
+type Results = v.InferOutput<typeof ResultsSchema>;
+type Feedback = -1 | null | 1;
+
+// Data Fetching
 
 async function fetchResults(query: string) {
   const params = new URLSearchParams({ query: query });
@@ -69,11 +79,6 @@ async function submitFeedback(props: { feedback: number; query: string; result_i
   }
 }
 
-// Types
-
-type Results = v.InferOutput<typeof ResultsSchema>;
-type Feedback = -1 | null | 1;
-
 // Components
 function ErrorMessage(props: { error: Error }) {
   return (
@@ -85,23 +90,15 @@ function ErrorMessage(props: { error: Error }) {
   );
 }
 
-const SearchFormSchema = v.object({
-  query: v.pipe(v.string(), v.trim(), v.minLength(1, "Please enter search term(s)...")),
-});
-
 function SearchBar(props: { setQuery: Setter<string | null> }) {
   const submitSearch = (event: SubmitEvent) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement | null;
     if (form) {
       const data = v.safeParse(SearchFormSchema, Object.fromEntries(new FormData(form)));
-
       if (data.success) {
         startTransition(() => props.setQuery(data.output.query));
       } else {
-        // const search = form.querySelector("input[name=query]") as HTMLFormElement | null;
-        // search?.setCustomValidity("Please enter search term(s)...");
-        // search?.reportValidity();
         alert(data.issues[0].message);
       }
     }
@@ -112,7 +109,7 @@ function SearchBar(props: { setQuery: Setter<string | null> }) {
       <form name="search" onsubmit={submitSearch}>
         <input
           type="text"
-          id="search"
+          id="query"
           name="query"
           placeholder={"Search fast.ai videos & resources..."}
         />
@@ -162,9 +159,12 @@ function Theater(props: {
 }) {
   const [restart, setRestart] = createSignal(false, { equals: false });
   const result = createMemo(() => {
-    return props.selected() || props.selected() == 0 ? props.results()[props.selected()!] : null;
+    return props.selected() || props.selected() === 0 ? props.results()[props.selected()!] : null;
   });
   const handleFeedback = (fb: Feedback) => {
+    // check that the feedback signal has not updated in value
+    // TRY: to submit the feedback
+    // CATCH: response error
     if (fb && fb !== props.feedback[props.selected()!]) {
       try {
         submitFeedback({
@@ -191,7 +191,7 @@ function Theater(props: {
     }&autoplay=${restart() ? 1 : 0}&rel=0`;
 
   return (
-    <div class="theater" classList={{ slideDown: result() }}>
+    <div class="theater" classList={{ slideDown: !!result() }}>
       <Show when={result()}>
         <div id="videoPanel">
           <iframe
@@ -200,10 +200,9 @@ function Theater(props: {
             height="405"
             src={url()}
             title="YouTube video player"
-            frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-          ></iframe>
+          />
         </div>
         <div id="metaPanel" class="metaPanel">
           <div class="top">
@@ -220,12 +219,12 @@ function Theater(props: {
                 id="btn-fb-yes"
                 onClick={[handleFeedback, 1]}
                 classList={{ selectedYES: props.feedback[props.selected()!] === 1 }}
-              ></button>
+              />
               <button
                 id="btn-fb-no"
                 onClick={[handleFeedback, -1]}
                 classList={{ selectedNO: props.feedback[props.selected()!] === -1 }}
-              ></button>
+              />
             </div>
           </div>
 
@@ -243,6 +242,7 @@ function Theater(props: {
               id="forum"
               href={result()!.forum || ""}
               target="_blank"
+              rel="noreferrer"
               classList={{ "btn-disabled": !result()!.forum }}
             >
               Forum
