@@ -1,14 +1,20 @@
 import {
+  action,
+  cache,
+  createAsync,
+  type AccessorWithLatest,
+  type RouteDefinition,
+  useSearchParams,
+} from "@solidjs/router";
+import {
   ErrorBoundary,
   Suspense,
   For,
   startTransition,
   createSignal,
   Show,
-  untrack,
   createMemo,
   createEffect,
-  createResource,
   type Accessor,
   type Setter,
 } from "solid-js";
@@ -53,8 +59,8 @@ type Results = v.InferOutput<typeof ResultsSchema>;
 type Feedback = -1 | null | 1;
 
 // Data Fetching
-
-async function fetchResults(query: string) {
+const getResults = cache(async (query: string | undefined) => {
+  if (!query || query === "") return [] as Results;
   const params = new URLSearchParams({ query: query });
   const resp = await fetch(`/api/search?${params.toString()}`, {
     headers: { "Content-Type": "application/json" },
@@ -65,19 +71,22 @@ async function fetchResults(query: string) {
   const data = await resp.json();
   const results = v.parse(ResultsSchema, data);
   return results;
-}
+}, "results");
 
-async function submitFeedback(props: { feedback: number; query: string; result_id: string }) {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(props),
-  });
+const submitFeedback = action(
+  async (props: { feedback: number; query: string; result_id: string }) => {
+    const response = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(props),
+    });
 
-  if (!response.ok) {
-    throw new Error(`${response.status} | ${response.statusText}`);
-  }
-}
+    if (!response.ok) {
+      throw new Error(`${response.status} | ${response.statusText}`);
+    }
+  },
+  "feedback"
+);
 
 // Components
 function ErrorMessage(props: { error: Error }) {
@@ -90,14 +99,15 @@ function ErrorMessage(props: { error: Error }) {
   );
 }
 
-function SearchBar(props: { setQuery: Setter<string | null> }) {
+function SearchBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const submitSearch = (event: SubmitEvent) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement | null;
     if (form) {
       const data = v.safeParse(SearchFormSchema, Object.fromEntries(new FormData(form)));
       if (data.success) {
-        startTransition(() => props.setQuery(data.output.query));
+        startTransition(() => setSearchParams({ q: data.output.query }));
       } else {
         alert(data.issues[0].message);
       }
@@ -108,10 +118,11 @@ function SearchBar(props: { setQuery: Setter<string | null> }) {
     <search>
       <form name="search" onsubmit={submitSearch}>
         <input
-          type="text"
+          type="search"
           id="query"
           name="query"
-          placeholder={"Search fast.ai videos & resources..."}
+          value={searchParams.q ?? ""}
+          placeholder="Search fast.ai videos & resources..."
         />
         <button id="btn-clear" type="reset" />
         <button id="btn-search" type="submit" />
@@ -150,45 +161,51 @@ function Result(props: {
   );
 }
 
+function FeedbackForm() {
+  return (
+    <form name="feedback">
+      <input type="hidden" name="result_id" value={""} />
+      <input type="hidden" name="query" value={""} />
+      <input type="hidden" name="feedback" value={""} />
+    </form>
+  );
+}
+
 function Theater(props: {
-  results: Accessor<Results>;
-  query: Accessor<string | null>;
+  results: AccessorWithLatest<Results>;
   selected: Accessor<number | null>;
   feedback: Feedback[];
   setFeedback: SetStoreFunction<Feedback[]>;
 }) {
-  const [restart, setRestart] = createSignal(false, { equals: false });
+  const [searchParams] = useSearchParams();
+  let player!: HTMLIFrameElement;
+  const url = () => {
+    return `https://www.youtube-nocookie.com/embed/${result()!.video_id}?start=${
+      result()!.start
+    }&autoplay=1&rel=0`;
+  };
+
   const result = createMemo(() => {
     return props.selected() || props.selected() === 0 ? props.results()[props.selected()!] : null;
   });
-  const handleFeedback = (fb: Feedback) => {
+
+  const handleFeedback = (feedback: Feedback) => {
     // check that the feedback signal has not updated in value
     // TRY: to submit the feedback
     // CATCH: response error
-    if (fb && fb !== props.feedback[props.selected()!]) {
+    if (feedback && feedback !== props.feedback[props.selected()!]) {
       try {
         submitFeedback({
-          feedback: fb,
-          query: untrack(props.query)!,
+          feedback: feedback,
+          query: searchParams.q!,
           result_id: result()!.video_id,
         });
-        props.setFeedback(props.selected()!, fb);
+        props.setFeedback(props.selected()!, feedback);
       } catch (e) {
         alert("Failed to submit feedback. Please retry.");
       }
     }
   };
-
-  createEffect(() => {
-    // When selected result changes, reset autoplay
-    props.selected();
-    setRestart(false);
-  });
-
-  const url = () =>
-    `https://www.youtube-nocookie.com/embed/${result()!.video_id}?start=${
-      result()!.start
-    }&autoplay=${restart() ? 1 : 0}&rel=0`;
 
   return (
     <div class="theater" classList={{ slideDown: !!result() }}>
@@ -196,6 +213,7 @@ function Theater(props: {
         <div id="videoPanel">
           <iframe
             id="player"
+            ref={player}
             width="720"
             height="405"
             src={url()}
@@ -207,7 +225,11 @@ function Theater(props: {
         <div id="metaPanel" class="metaPanel">
           <div class="top">
             <div>
-              <button id="segmentStart" onClick={[setRestart, true]}>
+              <button
+                id="segmentStart"
+                type="button"
+                onclick={() => player.setAttribute("src", url())}
+              >
                 {secToHMS(result()!.start)}
               </button>
               Restart segment
@@ -217,13 +239,19 @@ function Theater(props: {
               <div>Rate this result</div>
               <button
                 id="btn-fb-yes"
+                type="button"
                 onClick={[handleFeedback, 1]}
-                classList={{ selectedYES: props.feedback[props.selected()!] === 1 }}
+                classList={{
+                  selectedYES: props.feedback[props.selected()!] === 1,
+                }}
               />
               <button
                 id="btn-fb-no"
+                type="button"
                 onClick={[handleFeedback, -1]}
-                classList={{ selectedNO: props.feedback[props.selected()!] === -1 }}
+                classList={{
+                  selectedNO: props.feedback[props.selected()!] === -1,
+                }}
               />
             </div>
           </div>
@@ -234,6 +262,7 @@ function Theater(props: {
               id="lesson"
               href={result()!.lesson || ""}
               target="_blank"
+              rel="noreferrer"
               classList={{ "btn-disabled": !result()!.lesson }}
             >
               Lesson
@@ -251,6 +280,7 @@ function Theater(props: {
               id="course"
               href={result()!.course || ""}
               target="_blank"
+              rel="noreferrer"
               classList={{ "btn-disabled": !result()!.course }}
             >
               Course
@@ -262,35 +292,40 @@ function Theater(props: {
   );
 }
 
+export const route = {
+  preload(props) {
+    getResults(props.params.q);
+  },
+} satisfies RouteDefinition;
+
 export default function App() {
-  const [query, setQuery] = createSignal<string | null>(null);
-  const [results] = createResource(query, fetchResults, { initialValue: [] });
+  const [searchParams] = useSearchParams();
+  const results = createAsync(() => getResults(searchParams.q), { initialValue: [] });
   const [feedback, setFeedback] = createStore<Feedback[]>([]);
   const [selected, setSelected] = createSignal<number | null>(null);
 
   // TODO: Refactor to push selected in results data structure
   createEffect(() => {
-    setFeedback(initFeedback(results().length));
+    setFeedback(initFeedback(results()!.length));
     setSelected(null);
   });
 
   return (
     <main>
-      <div id="header">
+      <header>
         <div class="tabsPanel">
           <img src="/img/logo.svg" alt="FastSearch logo" />
           <div class="tabs">
             <a href="/writeup/scope.html">PROJECT WRITEUP</a>
           </div>
         </div>
-        <SearchBar setQuery={setQuery} />
-      </div>
+        <SearchBar />
+      </header>
       <div id="content" class="content">
         <ErrorBoundary fallback={(error) => <ErrorMessage error={error} />}>
           <Suspense>
             <Theater
               results={results}
-              query={query}
               selected={selected}
               feedback={feedback}
               setFeedback={setFeedback}
@@ -313,3 +348,11 @@ export default function App() {
     </main>
   );
 }
+
+/**
+ * TODO:
+ *
+ * - Try using html form get action for search submission
+ * -
+ *
+ */

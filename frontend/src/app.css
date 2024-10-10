@@ -37,7 +37,7 @@ main {
   display: block;
 }
 
-#header {
+header {
   width: var(--appWidth);
   height: var(--headerHeight);
   margin: auto;

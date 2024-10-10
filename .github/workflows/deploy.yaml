@@ -58,21 +58,21 @@ jobs:
       PGPASSWORD: ${{secrets.PGPASSWORD}}
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - uses: actions/setup-node@v4
         with:
           node-version-file: frontend/.node-version
-      - uses: oven-sh/setup-bun@v2
 
-      - name: Install Front-end Dependencies
-        run: |
-          cd frontend
-          bun install
+      # Build Frontend
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: bun install
 
       - name: Build Frontend
-        run: |
-          cd frontend
-          bun run build
+        working-directory: frontend
+        run: bun run build
 
+      # Setup CDK
       - name: Install CDK
         run: bun install -global aws-cdk
 
@@ -90,6 +90,7 @@ jobs:
           poetry install
           cd ..
 
+      # Deploy CDK
       - name: Synth CDK Template
         run: cdk synth > /dev/null
 
