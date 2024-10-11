@@ -5,10 +5,7 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        "/api/": {
-          target: "http://localhost:8000/",
-          changeOrigin: false,
-        },
+        "/api/": { target: "http://localhost:8000/", changeOrigin: false },
       },
     },
   },
