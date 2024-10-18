@@ -1,11 +1,10 @@
 import {
   action,
   cache,
-  createAsync,
   useSearchParams,
-  reload,
   type AccessorWithLatest,
   type RouteDefinition,
+  createAsyncStore,
 } from "@solidjs/router";
 import {
   ErrorBoundary,
@@ -18,18 +17,24 @@ import {
   createEffect,
   type Accessor,
   type Setter,
+  untrack,
 } from "solid-js";
 import { type SetStoreFunction, createStore } from "solid-js/store";
 import * as v from "valibot";
 
-import "~/components/Navbar.css";
-import "~/components/Results.css";
-import "~/components/Search.css";
-import "~/components/Theater.css";
+import "~/styles/app.css";
+import "~/styles/Navbar.css";
+import "~/styles/Results.css";
+import "~/styles/Search.css";
+import "~/styles/Theater.css";
 
 // Helper
 function secToHMS(sec: number): string {
   return new Date(sec * 1000).toISOString().slice(11, 19);
+}
+
+function createFeedbackArray(num: number) {
+  return Array(num).fill(null) as Feedback[];
 }
 
 // Types
@@ -53,50 +58,38 @@ const SearchFormSchema = v.object({
 });
 
 type Results = v.InferOutput<typeof ResultsSchema>;
-type Feedback = -1 | null | 1;
+type Feedback = -1 | 1;
 
 // Data Fetching
-const getResults = cache(async (query: string | undefined) => {
-  if (!query || query === "") return [] as Results;
+const getResults = cache(async (query: string) => {
   const params = new URLSearchParams({ query: query });
   const resp = await fetch(`/api/search?${params.toString()}`, {
     headers: { "Content-Type": "application/json" },
   });
   if (!resp.ok) {
-    throw new Error(`${resp.status} | ${resp.statusText}`);
+    throw new Error(`search request failed (http: ${resp.status})`);
   }
   const data = await resp.json();
   const results = v.parse(ResultsSchema, data);
   return results;
 }, "results");
 
-// const postFeedback = action(
-//   async (props: { feedback: number; query: string; result_id: string }) => {
-//     const response = await fetch("/api/feedback", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(props),
-//     });
+const postFeedback = action(
+  async (props: { feedback: Feedback; query: string; result_id: string }) => {
+    console.log("posting");
+    const response = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(props),
+    });
 
-//     if (!response.ok) {
-//       throw new Error(`${response.status} | ${response.statusText}`);
-//     }
-//     return reload({ revalidate: "nothing" });
-//   },
-//   "feedback"
-// );
-const postFeedback = async (props: { feedback: number; query: string; result_id: string }) => {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(props),
-  });
-
-  if (!response.ok) {
-    throw new Error(`${response.status} | ${response.statusText}`);
-  }
-  // return reload({ revalidate: "nothing" });
-};
+    if (!response.ok) {
+      throw new Error(`could not submit feedback (${response.status})`);
+    }
+    return true;
+  },
+  "feedback"
+);
 
 // Components
 function ErrorMessage(props: { error: Error }) {
@@ -172,6 +165,9 @@ function Result(props: {
   );
 }
 
+// Show feedback
+
+// INVARIANT: selected should always be true
 function Theater(props: {
   results: AccessorWithLatest<Results>;
   selected: Accessor<number | null>;
@@ -179,6 +175,13 @@ function Theater(props: {
   setFeedback: SetStoreFunction<Feedback[]>;
 }) {
   const [searchParams] = useSearchParams();
+
+  const currentFeedback = createMemo(() => {
+    const selected = props.selected();
+    return selected ? props.feedback[selected] : null;
+  });
+  const setCurrentFeedback = () => {};
+
   const result = createMemo(() => {
     const selected = props.selected();
     return selected || selected === 0 ? props.results()[selected] : null;
@@ -191,51 +194,20 @@ function Theater(props: {
     }&autoplay=1&rel=0`;
   };
 
-  // const handleFeedback = useAction(postFeedback);
-  // const feedbackSubmission = useSubmission(postFeedback);
-  // createEffect(() => {
-  //   if (feedbackSubmission.error) alert("Failed to submit feedback. Please retry.");
-  // });
-
-  // handleFeedback({
-  //   result_id: result()!.video_id,
-  //   query: searchParams.q!,
-  //   feedback: 1,
-  // });
-
-  const handleFeedback = (feedback: Feedback) => {
-    // check that the feedback signal has not updated in value
-    // TRY: to submit the feedback
-    // CATCH: response error
-
-    // ASSERT: feedback is not null (-1, 1)
-    // ASSERT: selected is not null
-    // ASSERT: result_id is not undefined
-    // ASSERT: query exisits (string)
-    // ASSERT: feedback is not the same as previous submission
-
+  const submitFeedback = (feedback: Feedback) => {
     const selected = props.selected();
-    const result_id = result()?.video_id;
-    console.log(
-      feedback,
-      selected,
-      result_id,
-      searchParams.q,
-      feedback !== props.feedback[selected]
-    );
-
-    if (
-      feedback &&
-      selected &&
-      result_id &&
-      searchParams.q &&
-      feedback !== props.feedback[selected]
-    ) {
+    if (selected && feedback === untrack(currentFeedback)) {
+      console.log("hello world");
       try {
-        postFeedback({ feedback: feedback, query: searchParams.q, result_id: result_id });
+        postFeedback({
+          feedback: feedback,
+          query: searchParams.q!,
+          result_id: result()?.video_id!,
+        });
+        // Implemenet selected as useSubmission
         props.setFeedback(selected, feedback);
-      } catch (error) {
-        console.log(error);
+      } catch {
+        // console.log(error);
         alert("Failed to submit feedback. Please retry.");
       }
     }
@@ -243,7 +215,7 @@ function Theater(props: {
 
   return (
     <div class="theater" classList={{ slideDown: !!result() }}>
-      <Show when={result()}>
+      <Show when={props.selected() !== null}>
         <div id="videoPanel">
           <iframe
             id="player"
@@ -274,18 +246,14 @@ function Theater(props: {
               <button
                 id="btn-fb-yes"
                 type="button"
-                onClick={[handleFeedback, 1]}
-                classList={{
-                  selectedYES: props.feedback[props.selected()!] === 1,
-                }}
+                onclick={[submitFeedback, 1]}
+                classList={{ selectedYES: currentFeedback() === 1 }}
               />
               <button
                 id="btn-fb-no"
                 type="button"
-                onClick={[handleFeedback, -1]}
-                classList={{
-                  selectedNO: props.feedback[props.selected()!] === -1,
-                }}
+                onclick={[submitFeedback, -1]}
+                classList={{ selectedNO: currentFeedback() === -1 }}
               />
             </div>
           </div>
@@ -334,13 +302,12 @@ export const route = {
 
 export default function App() {
   const [searchParams] = useSearchParams();
-  const results = createAsync(() => getResults(searchParams.q), { initialValue: [] });
-  const [feedback, setFeedback] = createStore([] as Feedback[]);
+  const results = createAsyncStore(() => getResults(searchParams.q), { initialValue: [] });
+  const [feedbackStore, setFeedbackStore] = createStore([] as Feedback[]);
   const [selected, setSelected] = createSignal<number | null>(null);
-
   // TODO: Refactor to push selected in results data structure
   createEffect(() => {
-    setFeedback(Array(results().length).fill(null) as Feedback[]);
+    setFeedbackStore(createFeedbackArray(results().length));
     setSelected(null);
   });
 
@@ -350,7 +317,7 @@ export default function App() {
         <div class="tabsPanel">
           <img src="/img/logo.svg" alt="FastSearch logo" />
           <div class="tabs">
-            <a href="/writeup/scope.html">PROJECT WRITEUP</a>
+            <a href="/writeup/scope">PROJECT WRITEUP</a>
           </div>
         </div>
         <Search />
@@ -361,8 +328,8 @@ export default function App() {
             <Theater
               results={results}
               selected={selected}
-              feedback={feedback}
-              setFeedback={setFeedback}
+              feedback={feedbackStore}
+              setFeedback={setFeedbackStore}
             />
             <ul id="results">
               <For each={results()}>
@@ -385,10 +352,11 @@ export default function App() {
 
 /**
  * TODO:
- *
  * - Try using html form get action for search submission
  * - Switch from list[index] to object[id] for results page ???
  * - Switch to manging state with `createStore`
- * - Use CSS-in-JS `bun add macroon`
  *
+ * - Refactor css for css-in-js
+ *    - Use css modules
+ *    - Use css-in-js lib
  */
