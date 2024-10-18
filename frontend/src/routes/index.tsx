@@ -62,6 +62,7 @@ type Feedback = -1 | 1;
 
 // Data Fetching
 const getResults = cache(async (query: string) => {
+  if (!query || query.length === 0) return [];
   const params = new URLSearchParams({ query: query });
   const resp = await fetch(`/api/search?${params.toString()}`, {
     headers: { "Content-Type": "application/json" },
