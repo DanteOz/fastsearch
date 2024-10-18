@@ -17,7 +17,7 @@ export default function Feedback() {
           </p>
           <h3>Feedback UI</h3>
           <img
-            src="/writeup/img/feedback-ui.jpg"
+            src="/img/writeup/feedback-ui.jpg"
             alt=""
             class="borderless"
             style="border-radius: 8px"
@@ -42,8 +42,8 @@ export default function Feedback() {
             asynchronously, via background tasks scheduled on the FastAPI framework event loop, in
             order to reduce the latency created by database connection and transaction.
           </p>
-          <img src="/writeup/img/feedback-sync.png" alt="" />
-          <img src="/writeup/img/feedback-async.png" alt="" />
+          <img src="/img/writeup/feedback-sync.png" alt="" />
+          <img src="/img/writeup/feedback-async.png" alt="" />
           <blockquote>
             <p class="bq-title">Coming in FastSearch 2.0</p>
             <p>

@@ -33,7 +33,7 @@ export default function Scope() {
             all six years of <em>fast.ai</em>
             lectures to find exact timestamps relevant to thousands of student questions:
           </p>
-          <img src="/writeup/img/fs-app.jpg" alt="" class="borderless" style="border-radius: 8px" />
+          <img src="/img/writeup/fs-app.jpg" alt="" class="borderless" style="border-radius: 8px" />
           <div class="prevnext first">
             <a href="/writeup/semantic">Semantic search</a>
           </div>

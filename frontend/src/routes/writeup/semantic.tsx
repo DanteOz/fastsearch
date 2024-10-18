@@ -14,7 +14,7 @@ export default function Semantic() {
             common approach would have been a lexical search engine, like ElasticSearch, with a
             predictable process flow like this:
           </p>
-          <img src="/writeup/img/lexical.png" alt="" />
+          <img src="/img/writeup/lexical.png" alt="" />
           <p>
             While lexical search works by decomposing queries into tokens, retrieving documents from
             an inverted index, and ranking candidates using sparse BM25 vectors and cosine
@@ -29,7 +29,7 @@ export default function Semantic() {
             together. Transformers are well suited to learn this embedding space as their
             self-attention layers directly learn the interactions between tokens in text.
           </p>
-          <img src="/writeup/img/semantic.png" alt="" />
+          <img src="/img/writeup/semantic.png" alt="" />
 
           <div class="prevnext">
             <a href="/writeup/scope">Application scope</a>

@@ -25,7 +25,7 @@ export default function Training() {
             pairwise distance metrics, such as cosine similarity or dot-product. They are, however,
             limited to having to represent a document by a single N-dimensional vector.
           </p>
-          <img src="/writeup/img/training.png" alt="" />
+          <img src="/img/writeup/training.png" alt="" />
           <p>
             In order to leverage the power of both models, FastSearch uses a cross-architecture
             knowledge distillation (
@@ -87,8 +87,8 @@ export default function Training() {
               query-document pairs and while using smaller model during inference.
             </p>
           </blockquote>
-          <img src="/writeup/img/ensemble.png" alt="" />
-          <img src="/writeup/img/marginMSE.png" alt="" />
+          <img src="/img/writeup/ensemble.png" alt="" />
+          <img src="/img/writeup/marginMSE.png" alt="" />
 
           <div class="prevnext">
             <a href="/writeup/semantic">Semantic search</a>

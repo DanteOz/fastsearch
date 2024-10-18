@@ -10,13 +10,13 @@ export default function Backend() {
           <p>
             The FastSearch search endpoint is responsible for embedding user queries, retrieving
             candidate results from the vector DB, ranking results and logging user queries (see
-            section
+            section{" "}
             <a href="/writeup/feedback" class="link-inline">
               Feedback loop
             </a>
             ).
           </p>
-          <img src="/writeup/img/backend.png" alt="" />
+          <img src="/img/writeup/backend.png" alt="" />
           <p>In order to deliver a responsive search experience, FastSearch utilizes:</p>
           <ol>
             <li>
@@ -37,7 +37,7 @@ export default function Backend() {
             of serverless and VM-based AWS services were considered. Top candidates:
           </p>
 
-          <img src="/writeup/img/choices.png" alt="" class="borderless" />
+          <img src="/img/writeup/choices.png" alt="" class="borderless" />
 
           <blockquote>
             <p class="bq-title">Coming in FastSearch 2.0</p>
@@ -61,8 +61,8 @@ export default function Backend() {
             optimizations lead to improvements of 2.7X in bi-encoder and 1.22X in cross-encoder
             latency.
           </p>
-          <img src="/writeup/img/latency-bi.png" alt="" />
-          <img src="/writeup/img/latency-cross.png" alt="" />
+          <img src="/img/writeup/latency-bi.png" alt="" />
+          <img src="/img/writeup/latency-cross.png" alt="" />
           <p>
             Using the ONNX Runtime also improved cold start time by 18% and reduced the size of the
             backend Docker container by 726MB / 2.04X by removing PyTorch as a runtime dependency.

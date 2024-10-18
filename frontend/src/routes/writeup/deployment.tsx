@@ -16,7 +16,7 @@ export default function Deployment() {
             backend is hosted as a containerized
             <span class="product">AWS App Runner</span> endpoint.
           </p>
-          <img src="/writeup/img/deployment.png" alt="" />
+          <img src="/img/writeup/deployment.png" alt="" />
 
           <h3>CI/CD pipeline</h3>
           <p>
@@ -39,7 +39,7 @@ export default function Deployment() {
             data pipeline is triggered in order to rebuild the ANN index of all lecture transcripts.
           </p>
 
-          <img src="/writeup/img/mlops.png" alt="" class="bkz" />
+          <img src="/img/writeup/mlops.png" alt="" class="bkz" />
 
           <div class="prevnext">
             <a href="/writeup/feedback">Feedback loop</a>

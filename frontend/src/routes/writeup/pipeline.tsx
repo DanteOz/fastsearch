@@ -20,7 +20,7 @@ export default function Pipeline() {
             </li>
             <li>generates timestamped lecture transcripts (via GPU accelerated batch inference)</li>
           </ol>
-          <img src="/writeup/img/data-scraping.png" alt="" />
+          <img src="/img/writeup/data-scraping.png" alt="" />
           <p>
             Further, the <strong>indexing pipeline</strong>:
           </p>
@@ -30,7 +30,7 @@ export default function Pipeline() {
             <li>incrementally updates the ANN index with embeddings and search payloads</li>
             <li>rebuilds the ANN index when the embedding (bi-encoder) model changes</li>
           </ol>
-          <img src="/writeup/img/data-indexing.png" alt="" />
+          <img src="/img/writeup/data-indexing.png" alt="" />
           <h3>Transcripts</h3>
           <p>
             When available, FastSearch leverages <em>fast.ai</em> student contributed multilingual
@@ -55,7 +55,7 @@ export default function Pipeline() {
               bootstrap support for other languages by this process flow:
             </p>
           </blockquote>
-          <img src="/writeup/img/transcripts.png" alt="" />
+          <img src="/img/writeup/transcripts.png" alt="" />
           <h3>Metadata</h3>
           <p>
             Each lecture FastSearch scrapes from YouTube contains 69 metadata fields. Eighteen of
@@ -71,8 +71,8 @@ export default function Pipeline() {
             references to <em>fast.ai</em> course materials to form the JSON search payloads stored
             in <span class="product">Qdrant</span> vector DB.
           </p>
-          <img src="/writeup/img/erd.png" alt="" class="borderless" />
-          <img src="/writeup/img/payload.png" alt="" />
+          <img src="/img/writeup/erd.png" alt="" class="borderless" />
+          <img src="/img/writeup/payload.png" alt="" />
 
           <div class="prevnext">
             <a href="/writeup/training">Model training</a>
