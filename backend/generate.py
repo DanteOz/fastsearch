@@ -1,5 +1,6 @@
-from backend.src.main import app
 from json import dump
 
-with open("../openapi.json", "w") as file:
+from src.main import app
+
+with open("openapi.json", "w") as file:
     dump(app.openapi(), file)

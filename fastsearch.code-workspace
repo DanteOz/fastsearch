@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "backend"
+		},
+		{
+			"path": "frontend"
+		},
+		{
+			"path": "pipeline"
+		},
+		{
+			"path": "infra"
+		}
+	],
+	"settings": {
+		"yaml.schemas": {
+			"https://json.schemastore.org/github-workflow.json": "file:///Users/rexor/projects/fastsearch/.github/workflows/deploy.yaml"
+		}
+	}
+}
