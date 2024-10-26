@@ -1,22 +1,21 @@
 [project]
 name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.110.1",
-    "pydantic>=2.6.4",
-    "uvicorn[standard]>=0.29.0",
-    "onnxruntime>=1.17.1",
-    "transformers>=4.39.3",
-    "qdrant-client>=1.8.2",
-    "sqlalchemy>=2.0",
-    "psycopg[binary]>=3.1.18",
-    "numpy<2",
+    "fastapi[standard]>=0.115.0",
+    "numpy>=2.1.1",
+    "onnxruntime>=1.19.2",
+    "psycopg[binary]>=3.2.2",
+    "pydantic>=2.9.2",
+    "qdrant-client>=1.11.3",
+    "sqlalchemy>=2.0.35",
+    "transformers>=4.44.2",
 ]
-requires-python = ">= 3.8"
 
-[tool.rye]
-managed = true
-virtual = true
-dev-dependencies = []
-
-[tool.ruff]
-line-length = 110
+[dependency-groups]
+dev = [
+    "ruff>=0.7.1",
+]

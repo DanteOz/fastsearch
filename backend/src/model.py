@@ -1,10 +1,7 @@
-from pathlib import Path
-
 import onnxruntime as ort
 import transformers
-from transformers import AutoTokenizer
 from huggingface_hub import hf_hub_download
-
+from transformers import AutoTokenizer
 
 transformers.logging.set_verbosity_error()
 
@@ -12,7 +9,9 @@ transformers.logging.set_verbosity_error()
 class ONNXRetriever:
     def __init__(self, model_id: str) -> None:
         session_opts = ort.SessionOptions()
-        session_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        session_opts.graph_optimization_level = (
+            ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        )
         model_path = hf_hub_download(model_id, "model.onnx", local_files_only=True)
         self.encoder = ort.InferenceSession(model_path, session_opts)
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -27,12 +26,16 @@ class ONNXRetriever:
 class ONNXRanker:
     def __init__(self, model_id: str) -> None:
         session_opts = ort.SessionOptions()
-        session_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        session_opts.graph_optimization_level = (
+            ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        )
         model_path = hf_hub_download(model_id, "model.onnx", local_files_only=True)
         self.ranker = ort.InferenceSession(model_path, session_opts)
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-    def __call__(self, query: str, candidates: list[str], num_results: int) -> list[int]:
+    def __call__(
+        self, query: str, candidates: list[str], num_results: int
+    ) -> list[int]:
         """Reranks candidate documents against query. Returns list of ranked indicies."""
         tokens = self.tokenizer(
             [query for _ in range(len(candidates))],
