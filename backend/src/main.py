@@ -5,7 +5,7 @@ from fastapi import BackgroundTasks, FastAPI
 from pydantic import BaseModel
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from sqlalchemy import URL, create_engine, text
+from sqlalchemy import URL, create_engine
 
 from model import ONNXRanker, ONNXRetriever
 
@@ -37,9 +37,9 @@ engine = create_engine(
 app = FastAPI(title="FastSearch", description="Semantic search for fast.ai lectures.")
 
 
-@app.get("/")
-def index() -> dict:
-    return {"msg": "success"}
+@app.get("/", status_code=200)
+def index() -> None:
+    return
 
 
 class Feedback(BaseModel):
@@ -49,30 +49,32 @@ class Feedback(BaseModel):
 
 
 @app.post("/api/feedback", status_code=204)
-def feedback(req: Feedback):
+def feedback(req: Feedback) -> None:
     """Insert search result feedback into feedback db."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with engine.connect() as conn:
-        sql = text(
-            """
-            INSERT INTO 
-                fastsearch.feedback (query, result_id, feedback, timestamp) 
-            VALUES (
-                :query, 
-                :result_id, 
-                :feedback, 
-                :timestamp
-            );
-            """
-        )
         conn.execute(
-            sql,
+            """\
+            INSERT INTO fastsearch.feedback (query, result_id, feedback, timestamp) 
+            VALUES (:query, :result_id, :feedback, :timestamp);
+            """,
             {
                 "query": req.query,
                 "result_id": req.result_id,
                 "feedback": req.feedback,
                 "timestamp": timestamp,
             },
+        )
+        conn.commit()
+
+
+def insert_query(query: str) -> None:
+    """Insert user query into feedback db."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with engine.connect() as conn:
+        conn.execute(
+            "INSERT INTO fastsearch.queries (query, timestamp) VALUES (:query, :timestamp);",
+            {"query": query, "timestamp": timestamp},
         )
         conn.commit()
 
@@ -87,19 +89,6 @@ class Result(BaseModel):
     lesson: str | None
     forum: str | None
     course: str | None
-
-
-def insert_query(query: str):
-    """Insert user query into feedback db."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with engine.connect() as conn:
-        conn.execute(
-            text(
-                "INSERT INTO fastsearch.queries (query, timestamp) VALUES (:query, :timestamp);"
-            ),
-            {"query": query, "timestamp": timestamp},
-        )
-        conn.commit()
 
 
 @app.get("/api/search")
