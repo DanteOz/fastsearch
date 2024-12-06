@@ -27,7 +27,7 @@ transcribe_image = (
 @app.function(
     gpu="A10G",
     image=transcribe_image,
-    secret=modal.Secret.from_name("fastsearch-aws"),
+    secrets=[modal.Secret.from_name("fastsearch-aws")],
     concurrency_limit=10,
     timeout=7200,
 )
