@@ -1,3 +1,10 @@
+# /// script
+# requires-python = "==3.10"
+# dependencies = [
+#     "dagster-graphql==1.9.4",
+#     "sshtunnel==0.4.0",
+# ]
+# ///
 import os
 
 from dagster_graphql import DagsterGraphQLClient

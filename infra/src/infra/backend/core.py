@@ -6,21 +6,21 @@ from aws_cdk.aws_apprunner import CfnService
 from constructs import Construct
 
 from infra.backend.utils import load_env_vars
-from infra.constants import BACKEND_DIR, PROJECT_DIR
+from infra.config import config
 
 
 class Backend(Construct):
     def __init__(self, scope: Construct, id: str, vpc: ec2.Vpc, vector_db: Construct, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        env_path = PROJECT_DIR / ".env.template"
+        env_path = config.project_dir / ".env.template"
         env = load_env_vars(env_path)
 
         build_args = ["HF_TOKEN", "RETRIEVER_MODEL", "RANKING_MODEL"]
         asset = assets.DockerImageAsset(
             self,
             "BackendImage",
-            directory=str(BACKEND_DIR),
+            directory=str(config.backend_dir),
             build_args={key: env[key] for key in build_args},
             platform=assets.Platform.LINUX_AMD64,
         )

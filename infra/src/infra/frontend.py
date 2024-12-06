@@ -1,11 +1,11 @@
+from pathlib import Path
+
 from aws_cdk import aws_certificatemanager as acm
 from aws_cdk import aws_cloudfront as cloudfront
 from aws_cdk import aws_cloudfront_origins as origins
 from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_s3_deployment as s3deploy
 from constructs import Construct
-
-from infra.constants import FRONTEND_DIR
 
 
 class StaticOrigin(Construct):
@@ -28,7 +28,7 @@ class StaticOrigin(Construct):
         self.static_assets = s3deploy.Source.asset(folder)
 
         # Create S3 Origin
-        self.origin = origins.S3Origin(self.bucket)
+        self.origin = origins.S3BucketOrigin(self.bucket)
 
         # Create Behavior Opttions
         self.behavior = cloudfront.BehaviorOptions(
@@ -54,6 +54,7 @@ class Frontend(Construct):
         self,
         scope: Construct,
         id: str,
+        frontend_dir: Path,
         default_root: str = "index.html",
         domain_name: str = None,
         certificate_arn: str = None,
@@ -70,7 +71,7 @@ class Frontend(Construct):
         )
 
         # Create S3 Origins
-        self.app = StaticOrigin(self, "app", folder=str(FRONTEND_DIR), index_file=default_root)
+        self.app = StaticOrigin(self, "app", folder=str(frontend_dir), index_file=default_root)
 
         # Create CloudFront Distributions
         self.distribution: cloudfront.Distribution = cloudfront.Distribution(

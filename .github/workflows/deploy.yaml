@@ -19,23 +19,15 @@ jobs:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
     steps:
-      - name: Checkout release
-        uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.11"
-          cache: "pip"
-
-      - name: Install Modal
-        run: |
-          python -m pip install --upgrade pip
-          pip install modal
+          version: "0.5.6"
 
       - name: Deploy job
+        working-directory: pipeline/
         run: |
-          modal deploy pipeline/modal/transcribe.py
+          uv run modal deploy modal/transcribe.py
 
   deploy-app:
     name: Deploy App
@@ -57,44 +49,29 @@ jobs:
       PGUSER: ${{secrets.PGUSER}}
       PGPASSWORD: ${{secrets.PGPASSWORD}}
     steps:
-      - name: Checkout release
-        uses: actions/checkout@v3
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20.17.0
+          # TODO: use node version file
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.5.6"
 
-      - name: Install Front-end Dependencies
+      - name: Build frontend
+        working-directory: frontend/
         run: |
-          cd frontend
-          npm i
-
-      - name: Build Frontend
-        run: |
-          cd frontend
+          npm install
           npm run build
 
-      - name: Install CDK
-        run: npm i -g aws-cdk
-        shell: bash
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-          cache: "pip"
-
-      - name: Install Python Dependencies
-        run: |
-          pip install --upgrade pip 
-          pip install poetry
-          cd infra
-          poetry install
-          cd ..
+      - name: Install infra (npm) dependencies
+        working-directory: infra/
+        run: npm i
 
       - name: Synth CDK Template
-        run: cdk synth > /dev/null
+        working-directory: infra/
+        run: npx cdk synth > /dev/null
 
       - name: Deploy CDK template
-        run: cdk deploy > /dev/null
+        working-directory: infra/
+        run: npx cdk deploy > /dev/null

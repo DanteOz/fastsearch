@@ -1,4 +1,0 @@
-{
-  "app": "python -m infra.app",
-  "asset-parallelism": true
-}

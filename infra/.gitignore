@@ -6,5 +6,12 @@ dist/
 wheels/
 *.egg-info
 
+# nodejs
+node_modules
+
+# cdk
+cdk.out/
+cdk.context.json
+
 # venv
 .venv

@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from aws_cdk import aws_autoscaling as autoscale
 from aws_cdk import aws_ec2 as ec2
 from aws_cdk import aws_ecr_assets as assets
@@ -8,6 +6,7 @@ from aws_cdk import aws_elasticloadbalancingv2 as elbv2
 from constructs import Construct
 
 from infra.backend.utils import load_env_vars
+from infra.config import config
 
 
 class Backend(Construct):
@@ -37,14 +36,14 @@ class Backend(Construct):
         cluster.add_asg_capacity_provider(capacity_provider)
 
         # Define Docker Image
-        env_path = Path(__file__).parent.parent.parent.joinpath(".env.template").absolute()
+        env_path = (config.project_dir / ".env.template").absolute()
         env = load_env_vars(env_path)
 
         build_args = ["HF_TOKEN", "RETRIEVER_MODEL", "RANKING_MODEL"]
         asset = assets.DockerImageAsset(
             self,
             "BackendImage",
-            directory=str(Path(__file__).parent.parent.parent.joinpath("backend").absolute()),
+            directory=str(config.backend_dir),
             build_args={key: env[key] for key in build_args},
             platform=assets.Platform.LINUX_AMD64,
         )

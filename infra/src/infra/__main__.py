@@ -4,14 +4,20 @@ import aws_cdk
 from constructs import Construct
 
 from infra.backend.core import Backend
-from infra.constants import CERTIFICATE_ARN, DOMAIN_NAME
+from infra.config import config
 from infra.frontend import Frontend
 
 
 class FastSearch(aws_cdk.Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-        frontend = Frontend(self, id="frontend", domain_name=DOMAIN_NAME, certificate_arn=CERTIFICATE_ARN)
+        frontend = Frontend(
+            self,
+            id="frontend",
+            domain_name=config.domain_name,
+            certificate_arn=config.certificate_arn,
+            frontend_dir=config.frontend_dir,
+        )
         backend = Backend(self, id="backend", vpc=None, vector_db=None)
         frontend.attach_backend(backend.origin)
 

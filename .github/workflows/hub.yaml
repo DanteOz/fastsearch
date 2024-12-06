@@ -12,21 +12,11 @@ jobs:
       run:
         working-directory: .github
     steps:
-      - name: Checkout release
-        uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
         with:
-          python-version: '3.11' 
-          cache: 'pip' 
-      
-      - name: Install Python Dependencies
-        run: |
-          pip install --upgrade pip 
-          pip install poetry
-          poetry install -C backfill/
-        
+          version: "0.5.6"
+
       - name: Backfill Indexing Pipeline
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
@@ -35,11 +25,9 @@ jobs:
           SSH_KEY: ${{secrets.SSH_KEY}}
           DAGSTER_PORT: ${{secrets.DAGSTER_PORT}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: .github/backfill/launch_backfill.py
         run: |
-          poetry run launch_backfill.py -C backfill/
-        
+          uv run launch_backfill.py
+
       - name: Deploy Backend
         run: gh workflow run deploy.yaml
-
-      
-    
