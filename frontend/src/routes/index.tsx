@@ -17,10 +17,10 @@ import {
 import { SetStoreFunction, createStore } from "solid-js/store";
 import * as v from "valibot";
 
-import "~/components/Navbar.css";
-import "~/components/Results.css";
-import "~/components/Search.css";
-import "~/components/Theater.css";
+import "~/styles/Navbar.css";
+import "~/styles/Results.css";
+import "~/styles/Search.css";
+import "~/styles/Theater.css";
 
 // Helper
 function secToHMS(sec: number): string {
