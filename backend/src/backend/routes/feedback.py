@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from sqlalchemy import text
 
-from database import engine
+from backend.database import engine
 
 router = APIRouter()
 

@@ -1,10 +1,7 @@
-from pathlib import Path
-
 import onnxruntime as ort
 import transformers
-from transformers import AutoTokenizer
 from huggingface_hub import hf_hub_download
-
+from transformers import AutoTokenizer
 
 transformers.logging.set_verbosity_error()
 

@@ -1,6 +1,6 @@
-import uvicorn
 from fastapi import APIRouter, FastAPI
-from routes import feedback, search
+
+from backend.routes import feedback, search
 
 app = FastAPI(
     title="FastSearch",
@@ -18,7 +18,3 @@ app.include_router(api)
 @app.get("/")
 def root() -> dict:
     return {"msg": "success"}
-
-
-if __name__ == "__main__":
-    uvicorn.run(app)

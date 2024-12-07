@@ -7,8 +7,8 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from sqlalchemy import text
 
-from database import engine
-from routes.search.model import ONNXRanker, ONNXRetriever
+from backend.database import engine
+from backend.routes.search.model import ONNXRanker, ONNXRetriever
 
 router = APIRouter()
 

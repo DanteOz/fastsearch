@@ -1,24 +1,25 @@
-FROM python:3.10-slim-buster
-WORKDIR /code
+FROM python:3.12-slim-bookworm
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# INSTALL PYTHON REQUIREMENTS
-COPY ./requirements.lock .
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir --upgrade -r /code/requirements.lock
+# COPY SOURCE
+ADD . /code
+
+# INSTALL DEPS
+ENV UV_COMPILE_BYTECODE=1
+WORKDIR /code
+RUN uv sync --frozen --no-install-project --no-editable
 
 # CACHE WEIGHTS
-ENV TRANSFORMERS_CACHE="./models"
-RUN mkdir ${TRANSFORMERS_CACHE}
+ENV HF_HOME="./models"
+RUN mkdir ${HF_HOME}
 
 ARG HF_TOKEN
 ARG RETRIEVER_MODEL
 ARG RANKING_MODEL
-COPY cache_model.py .
-RUN python /code/cache_model.py
+RUN uv run /code/scripts/cache_model.py 
 
-# COPY SOURCE
-COPY . .
+RUN uv sync --frozen --no-editable
 
 ENV TRANSFORMERS_OFFLINE=1
 ENV HF_DATASETS_OFFLINE=1
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uv", "run", "uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "80"]

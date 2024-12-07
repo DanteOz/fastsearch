@@ -1,6 +1,7 @@
 import os
+
+from huggingface_hub import hf_hub_download, login
 from transformers import AutoTokenizer
-from huggingface_hub import login, hf_hub_download
 
 
 def download_hub(repo_id: str):
