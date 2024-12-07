@@ -21,7 +21,7 @@ class Feedback(BaseModel):
     result_id: str
 
 
-@router.post("/api/feedback", status_code=204)
+@router.post("/feedback", status_code=204)
 def feedback(req: Feedback) -> None:
     """Insert search result feedback into feedback db."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
