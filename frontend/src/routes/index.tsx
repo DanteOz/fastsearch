@@ -288,7 +288,7 @@ export default function App() {
         <div class="tabsPanel">
           <img src="/img/logo.svg" alt="FastSearch logo" />
           <div class="tabs">
-            <a href="/writeup/scope.html">PROJECT WRITEUP</a>
+            <a href="/writeup/scope">PROJECT WRITEUP</a>
           </div>
         </div>
         <SearchBar setQuery={setQuery} />
