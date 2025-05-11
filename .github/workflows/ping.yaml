@@ -1,10 +1,9 @@
 name: Free Tier Ping
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'  # Runs every 12 hours (at the top of the hour)
+  # schedule:
+  #   - cron: "0 */6 * * *" # Runs every 12 hours (at the top of the hour)
   workflow_dispatch: {}
-
 
 jobs:
   post_request:
